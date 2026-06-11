@@ -20,7 +20,6 @@ python-multipart==0.0.9
 
 # Timezone
 pytz==2024.1
-pendulum==3.0.0
 
 # Cache
 redis==5.0.4
