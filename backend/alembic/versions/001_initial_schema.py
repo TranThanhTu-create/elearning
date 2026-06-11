@@ -53,17 +53,17 @@ depends_on = None
 
 def upgrade() -> None:
     # ─── ENUMS ───────────────────────────────────────────────
-    op.execute("CREATE TYPE IF NOT EXISTS user_role AS ENUM ('admin', 'student')")
-    op.execute("CREATE TYPE IF NOT EXISTS course_badge AS ENUM ('bestseller', 'new', 'sale', 'hot')")
-    op.execute("CREATE TYPE IF NOT EXISTS course_level AS ENUM ('beginner', 'intermediate', 'advanced')")
-    op.execute("CREATE TYPE IF NOT EXISTS order_status AS ENUM ('pending', 'completed', 'expired', 'cancelled', 'refunded')")
-    op.execute("CREATE TYPE IF NOT EXISTS payment_method AS ENUM ('bank_transfer', 'qr')")
-    op.execute("CREATE TYPE IF NOT EXISTS discount_type AS ENUM ('percent', 'fixed')")
-    op.execute("CREATE TYPE IF NOT EXISTS post_status AS ENUM ('draft', 'published', 'archived')")
-    op.execute("CREATE TYPE IF NOT EXISTS commission_status AS ENUM ('pending', 'approved', 'paid', 'cancelled')")
-    op.execute("CREATE TYPE IF NOT EXISTS withdrawal_status AS ENUM ('pending', 'approved', 'rejected')")
-    op.execute("CREATE TYPE IF NOT EXISTS page_type AS ENUM ('home', 'course_list', 'course_detail', 'blog', 'blog_detail', 'checkout')")
-    op.execute("CREATE TYPE IF NOT EXISTS checkout_outcome AS ENUM ('pending', 'completed', 'abandoned', 'expired')")
+    op.execute("DO $$ BEGIN CREATE TYPE user_role AS ENUM ('admin', 'student'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE course_badge AS ENUM ('bestseller', 'new', 'sale', 'hot'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE course_level AS ENUM ('beginner', 'intermediate', 'advanced'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE order_status AS ENUM ('pending', 'completed', 'expired', 'cancelled', 'refunded'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE payment_method AS ENUM ('bank_transfer', 'qr'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE discount_type AS ENUM ('percent', 'fixed'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE post_status AS ENUM ('draft', 'published', 'archived'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE commission_status AS ENUM ('pending', 'approved', 'paid', 'cancelled'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE withdrawal_status AS ENUM ('pending', 'approved', 'rejected'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE page_type AS ENUM ('home', 'course_list', 'course_detail', 'blog', 'blog_detail', 'checkout'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    op.execute("DO $$ BEGIN CREATE TYPE checkout_outcome AS ENUM ('pending', 'completed', 'abandoned', 'expired'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
 
     # ─── 1. USERS ─────────────────────────────────────────────
     op.create_table(
