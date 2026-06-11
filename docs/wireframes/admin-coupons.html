@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mã Giảm Giá — EduVietPro Admin</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="admin-layout">
+
+  <div class="admin-nav">
+    <div class="admin-nav-group">Tổng quan</div>
+    <a href="admin-dashboard.html" class="admin-nav-item">📊 Dashboard</a>
+    <div class="admin-nav-group">Nội dung</div>
+    <a href="admin-courses.html" class="admin-nav-item">📚 Khóa học</a>
+    <a href="admin-blog.html" class="admin-nav-item">✍️ Blog</a>
+    <div class="admin-nav-group">Kinh doanh</div>
+    <a href="admin-orders.html" class="admin-nav-item">🧾 Đơn hàng</a>
+    <a href="admin-users.html" class="admin-nav-item">👥 Học viên</a>
+    <a href="admin-affiliate.html" class="admin-nav-item">💰 Affiliate</a>
+    <a href="admin-coupons.html" class="admin-nav-item active">🎫 Mã giảm giá</a>
+    <a href="admin-leads.html" class="admin-nav-item">📋 Leads</a>
+    <div class="admin-nav-group">Hệ thống</div>
+    <a href="admin-analytics.html" class="admin-nav-item">📈 Analytics</a>
+    <a href="admin-settings.html" class="admin-nav-item">⚙️ Cài đặt</a>
+    <div style="padding:20px 20px 8px;margin-top:auto">
+      <a href="index.html" class="admin-nav-item" style="border:1.5px solid #ddd;border-radius:6px;padding:8px 12px;font-size:13px">← Về trang chủ</a>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <div class="flex-between mb-20" style="flex-wrap:wrap;gap:12px">
+      <div>
+        <h1 style="font-size:22px;font-weight:900">Mã Giảm Giá</h1>
+        <p class="text-sm text-gray mt-4">18 mã đang hoạt động · 247 lượt dùng tháng này</p>
+      </div>
+      <button class="btn-primary" onclick="openCreate()">+ Tạo mã mới</button>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Mã đang hoạt động</div>
+        <div style="font-size:22px;font-weight:900">18</div>
+        <div class="text-xs text-gray">/ 24 tổng mã</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Tổng lượt dùng</div>
+        <div style="font-size:22px;font-weight:900">1.284</div>
+        <div class="text-xs text-gray">Từ trước đến nay</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Doanh thu từ mã</div>
+        <div style="font-size:22px;font-weight:900">78.400.000 ₫</div>
+        <div class="text-xs text-gray">Sau khi giảm</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Tổng đã giảm</div>
+        <div style="font-size:22px;font-weight:900;color:#e67e22">12.640.000 ₫</div>
+        <div class="text-xs text-gray">Tháng này</div>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="flex gap-8 mb-16" style="flex-wrap:wrap">
+      <input class="form-control" style="max-width:240px" placeholder="Tìm mã giảm giá...">
+      <select class="filter-select"><option>Tất cả trạng thái</option><option>Đang hoạt động</option><option>Hết hạn</option><option>Đã dùng hết</option><option>Tắt</option></select>
+      <select class="filter-select"><option>Tất cả loại</option><option>Phần trăm (%)</option><option>Số tiền cố định (₫)</option></select>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card-dark" style="padding:0;overflow:hidden">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Mã</th>
+              <th>Loại giảm</th>
+              <th>Áp dụng cho</th>
+              <th>Đã dùng</th>
+              <th>Giới hạn</th>
+              <th>Hết hạn</th>
+              <th>Trạng thái</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span style="font-family:monospace;font-weight:900;font-size:14px;letter-spacing:.5px">EDUVIET20</span></td>
+              <td><span class="tag" style="background:#e8f5e9;color:#27ae60;border-color:#a5d6a7">Giảm 20%</span></td>
+              <td class="text-xs">Tất cả khóa học</td>
+              <td style="font-weight:700">247</td>
+              <td class="text-xs">Không giới hạn</td>
+              <td class="text-xs text-gray">31/12/2026</td>
+              <td><span class="tag tag-success">Hoạt động</span></td>
+              <td>
+                <div class="flex gap-4">
+                  <button class="btn-ghost btn-sm" onclick="openEdit()">Sửa</button>
+                  <button class="btn-ghost btn-sm" style="color:#c00">Tắt</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span style="font-family:monospace;font-weight:900;font-size:14px;letter-spacing:.5px">NEWMEMBER</span></td>
+              <td><span class="tag" style="background:#e8f5e9;color:#27ae60;border-color:#a5d6a7">Giảm 15%</span></td>
+              <td class="text-xs">Tất cả khóa học</td>
+              <td style="font-weight:700">89</td>
+              <td class="text-xs">1 lần/tài khoản</td>
+              <td class="text-xs text-gray">Không hết hạn</td>
+              <td><span class="tag tag-success">Hoạt động</span></td>
+              <td>
+                <div class="flex gap-4">
+                  <button class="btn-ghost btn-sm" onclick="openEdit()">Sửa</button>
+                  <button class="btn-ghost btn-sm" style="color:#c00">Tắt</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span style="font-family:monospace;font-weight:900;font-size:14px;letter-spacing:.5px">TIKTOK30</span></td>
+              <td><span class="tag" style="background:#e8f5e9;color:#27ae60;border-color:#a5d6a7">Giảm 30%</span></td>
+              <td class="text-xs">TikTok Marketing</td>
+              <td style="font-weight:700">34</td>
+              <td class="text-xs">50 lượt</td>
+              <td class="text-xs text-gray">15/06/2026</td>
+              <td><span class="tag tag-success">Hoạt động</span></td>
+              <td>
+                <div class="flex gap-4">
+                  <button class="btn-ghost btn-sm" onclick="openEdit()">Sửa</button>
+                  <button class="btn-ghost btn-sm" style="color:#c00">Tắt</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span style="font-family:monospace;font-weight:900;font-size:14px;letter-spacing:.5px">FLASH200K</span></td>
+              <td><span class="tag" style="background:#fff3e0;color:#e67e22;border-color:#ffcc80">Giảm 200.000 ₫</span></td>
+              <td class="text-xs">Đơn từ 1.000.000 ₫</td>
+              <td style="font-weight:700">50</td>
+              <td class="text-xs">50 lượt · Hết</td>
+              <td class="text-xs text-gray">01/05/2026</td>
+              <td><span class="tag" style="background:#fee;color:#c00;border-color:#f5c6c6">Hết lượt</span></td>
+              <td>
+                <div class="flex gap-4">
+                  <button class="btn-ghost btn-sm" onclick="openEdit()">Sửa</button>
+                  <button class="btn-ghost btn-sm" style="color:#c00">Xóa</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span style="font-family:monospace;font-weight:900;font-size:14px;letter-spacing:.5px">SUMMER25</span></td>
+              <td><span class="tag" style="background:#e8f5e9;color:#27ae60;border-color:#a5d6a7">Giảm 25%</span></td>
+              <td class="text-xs">Tất cả khóa học</td>
+              <td style="font-weight:700">0</td>
+              <td class="text-xs">100 lượt</td>
+              <td class="text-xs text-gray">01/06/2026</td>
+              <td><span class="tag" style="color:#666;background:#f0f0f0;border-color:#ddd">Chưa kích hoạt</span></td>
+              <td>
+                <div class="flex gap-4">
+                  <button class="btn-ghost btn-sm" onclick="openEdit()">Sửa</button>
+                  <button class="btn-primary btn-sm" style="font-size:11px">Kích hoạt</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span style="font-family:monospace;font-weight:900;font-size:14px;letter-spacing:.5px;color:#aaa">TET2026</span></td>
+              <td><span class="tag" style="background:#e8f5e9;color:#27ae60;border-color:#a5d6a7">Giảm 35%</span></td>
+              <td class="text-xs">Tất cả khóa học</td>
+              <td style="font-weight:700">312</td>
+              <td class="text-xs">Không giới hạn</td>
+              <td class="text-xs" style="color:#c00">15/02/2026 · Hết hạn</td>
+              <td><span class="tag" style="background:#fee;color:#c00;border-color:#f5c6c6">Hết hạn</span></td>
+              <td>
+                <div class="flex gap-4">
+                  <button class="btn-ghost btn-sm" style="color:#aaa" disabled>Sửa</button>
+                  <button class="btn-ghost btn-sm" style="color:#c00">Xóa</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE/EDIT MODAL -->
+<div id="coupon-modal" class="popup-overlay" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div style="background:#fff;border-radius:12px;padding:28px;width:100%;max-width:500px;border:2px solid #000">
+    <div class="flex-between mb-20">
+      <div id="modal-title" style="font-size:16px;font-weight:900">Tạo mã giảm giá mới</div>
+      <button onclick="closeModal()" style="border:none;background:none;font-size:20px;cursor:pointer">×</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="form-group" style="grid-column:1/-1">
+        <label>Mã giảm giá *</label>
+        <div style="display:flex;gap:8px">
+          <input class="form-control" id="coupon-code" placeholder="VD: SUMMER25" style="font-family:monospace;font-weight:700;text-transform:uppercase">
+          <button class="btn-ghost" onclick="genCode()" style="white-space:nowrap;flex-shrink:0">Tạo ngẫu nhiên</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Loại giảm</label>
+        <select class="form-control" id="discount-type" onchange="updateDiscountLabel()">
+          <option value="percent">Phần trăm (%)</option>
+          <option value="fixed">Số tiền cố định (₫)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label id="discount-label">Mức giảm (%)</label>
+        <input class="form-control" type="number" placeholder="20" min="1" max="100">
+      </div>
+      <div class="form-group">
+        <label>Áp dụng cho</label>
+        <select class="form-control">
+          <option>Tất cả khóa học</option>
+          <option>Quay Video Chuyên Nghiệp</option>
+          <option>Kinh Doanh Online Từ 0</option>
+          <option>Marketing Online A–Z</option>
+          <option>TikTok Marketing</option>
+          <option>Facebook & Instagram Ads</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Giới hạn lượt dùng</label>
+        <input class="form-control" type="number" placeholder="Để trống = không giới hạn">
+      </div>
+      <div class="form-group">
+        <label>Giới hạn / tài khoản</label>
+        <select class="form-control">
+          <option>Không giới hạn</option>
+          <option>1 lần</option>
+          <option>2 lần</option>
+          <option>3 lần</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ngày hết hạn</label>
+        <input class="form-control" type="date">
+        <div class="form-hint">Để trống = không hết hạn</div>
+      </div>
+      <div class="form-group" style="grid-column:1/-1">
+        <label>Đơn tối thiểu (₫)</label>
+        <input class="form-control" type="number" placeholder="0 = không yêu cầu">
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:4px">
+      <button onclick="closeModal()" class="btn-ghost w-full">Hủy</button>
+      <button class="btn-primary w-full">Tạo mã</button>
+    </div>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', true);
+function openCreate(){ document.getElementById('modal-title').textContent='Tạo mã giảm giá mới'; document.getElementById('coupon-modal').style.display='flex'; }
+function openEdit(){ document.getElementById('modal-title').textContent='Chỉnh sửa mã giảm giá'; document.getElementById('coupon-modal').style.display='flex'; }
+function closeModal(){ document.getElementById('coupon-modal').style.display='none'; }
+function genCode(){
+  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code='';
+  for(let i=0;i<8;i++) code+=chars[Math.floor(Math.random()*chars.length)];
+  document.getElementById('coupon-code').value=code;
+}
+function updateDiscountLabel(){
+  const t=document.getElementById('discount-type').value;
+  document.getElementById('discount-label').textContent=t==='percent'?'Mức giảm (%)':'Số tiền giảm (₫)';
+}
+</script>
+</body>
+</html>

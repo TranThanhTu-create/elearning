@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cài Đặt Hệ Thống — EduVietPro Admin</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="admin-layout">
+
+  <div class="admin-nav">
+    <div class="admin-nav-group">Tổng quan</div>
+    <a href="admin-dashboard.html" class="admin-nav-item">📊 Dashboard</a>
+    <div class="admin-nav-group">Nội dung</div>
+    <a href="admin-courses.html" class="admin-nav-item">📚 Khóa học</a>
+    <a href="admin-blog.html" class="admin-nav-item">✍️ Blog</a>
+    <div class="admin-nav-group">Kinh doanh</div>
+    <a href="admin-orders.html" class="admin-nav-item">🧾 Đơn hàng</a>
+    <a href="admin-users.html" class="admin-nav-item">👥 Học viên</a>
+    <a href="admin-affiliate.html" class="admin-nav-item">💰 Affiliate</a>
+    <a href="admin-coupons.html" class="admin-nav-item">🎫 Mã giảm giá</a>
+    <a href="admin-leads.html" class="admin-nav-item">📋 Leads</a>
+    <div class="admin-nav-group">Hệ thống</div>
+    <a href="admin-analytics.html" class="admin-nav-item">📈 Analytics</a>
+    <a href="admin-settings.html" class="admin-nav-item active">⚙️ Cài đặt</a>
+    <div style="padding:20px 20px 8px;margin-top:auto">
+      <a href="index.html" class="admin-nav-item" style="border:1.5px solid #ddd;border-radius:6px;padding:8px 12px;font-size:13px">← Về trang chủ</a>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <div class="flex-between mb-24" style="flex-wrap:wrap;gap:12px">
+      <h1 style="font-size:22px;font-weight:900">Cài Đặt Hệ Thống</h1>
+      <button class="btn-primary" onclick="saveAll()">Lưu tất cả thay đổi</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:start">
+
+      <!-- SETTINGS NAV -->
+      <div class="card-dark" style="padding:8px">
+        <a onclick="switchSection('general')" class="admin-nav-item active" id="snav-general" style="cursor:pointer">🌐 Thông tin chung</a>
+        <a onclick="switchSection('payment')" class="admin-nav-item" id="snav-payment" style="cursor:pointer">💳 Thanh toán</a>
+        <a onclick="switchSection('email')" class="admin-nav-item" id="snav-email" style="cursor:pointer">📧 Email & Thông báo</a>
+        <a onclick="switchSection('analytics')" class="admin-nav-item" id="snav-analytics" style="cursor:pointer">📊 Analytics</a>
+        <a onclick="switchSection('affiliate')" class="admin-nav-item" id="snav-affiliate" style="cursor:pointer">💰 Affiliate</a>
+        <a onclick="switchSection('lead')" class="admin-nav-item" id="snav-lead" style="cursor:pointer">📋 Lead Magnet</a>
+        <a onclick="switchSection('integrations')" class="admin-nav-item" id="snav-integrations" style="cursor:pointer">🔗 Tích hợp</a>
+      </div>
+
+      <!-- SETTINGS PANELS -->
+      <div>
+
+        <!-- GENERAL -->
+        <div id="section-general">
+          <div class="card-dark mb-16">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Thông tin website</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="form-group"><label>Tên website</label><input class="form-control" value="EduVietPro"></div>
+              <div class="form-group"><label>Tên miền</label><input class="form-control" value="eduvietpro.vn"></div>
+              <div class="form-group" style="grid-column:1/-1"><label>Mô tả ngắn (meta description)</label><textarea class="form-control" rows="2">Nền tảng học kỹ năng kinh doanh số, marketing, quay video hàng đầu Việt Nam.</textarea></div>
+              <div class="form-group"><label>Email liên hệ</label><input class="form-control" value="hello@eduvietpro.vn"></div>
+              <div class="form-group"><label>Số điện thoại hỗ trợ</label><input class="form-control" value="0901 234 567"></div>
+              <div class="form-group"><label>Facebook Page URL</label><input class="form-control" value="facebook.com/eduvietpro"></div>
+              <div class="form-group"><label>TikTok URL</label><input class="form-control" value="tiktok.com/@eduvietpro"></div>
+              <div class="form-group"><label>YouTube Channel URL</label><input class="form-control" value="youtube.com/@eduvietpro"></div>
+              <div class="form-group"><label>Zalo OA</label><input class="form-control" value="zalo.me/eduvietpro"></div>
+            </div>
+          </div>
+          <div class="card-dark">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Logo & Favicon</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div>
+                <label class="text-xs" style="font-weight:700;display:block;margin-bottom:8px">Logo (SVG hoặc PNG, nền trắng)</label>
+                <div style="border:2px dashed #ddd;border-radius:8px;padding:24px;text-align:center;cursor:pointer;background:#fafafa">
+                  <div style="font-size:20px;font-weight:900;margin-bottom:4px">EduViet<span style="font-weight:400">Pro</span></div>
+                  <div class="text-xs text-gray">Nhấn để thay đổi</div>
+                </div>
+              </div>
+              <div>
+                <label class="text-xs" style="font-weight:700;display:block;margin-bottom:8px">Favicon (ICO hoặc PNG 32×32)</label>
+                <div style="border:2px dashed #ddd;border-radius:8px;padding:24px;text-align:center;cursor:pointer;background:#fafafa">
+                  <div style="font-size:28px;margin-bottom:4px">📚</div>
+                  <div class="text-xs text-gray">Nhấn để thay đổi</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAYMENT -->
+        <div id="section-payment" style="display:none">
+          <div class="card-dark mb-16">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Cấu hình SePay</div>
+            <div style="padding:10px 14px;border:1.5px solid #27ae60;border-radius:6px;background:#f0fff4;font-size:12px;color:#27ae60;margin-bottom:16px;display:flex;align-items:center;gap:8px">
+              <span>✓</span> Đã kết nối · Webhook đang hoạt động bình thường
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="form-group"><label>SePay API Key</label><input class="form-control" type="password" value="sk_live_xxxxxxxxxxxxxxxx"></div>
+              <div class="form-group"><label>Webhook Secret</label><input class="form-control" type="password" value="whsec_xxxxxxxxxxxxxxxx"></div>
+              <div class="form-group"><label>Số tài khoản ngân hàng</label><input class="form-control" value="1234 5678 90"></div>
+              <div class="form-group"><label>Ngân hàng</label><select class="form-control"><option>Vietcombank</option><option>Techcombank</option><option>MB Bank</option><option>BIDV</option><option>VPBank</option></select></div>
+              <div class="form-group"><label>Tên chủ tài khoản</label><input class="form-control" value="NGUYEN ANH TUAN"></div>
+              <div class="form-group"><label>Thời gian hết hạn đơn (phút)</label><input class="form-control" type="number" value="30"></div>
+            </div>
+          </div>
+          <div class="card-dark">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Nội dung chuyển khoản</div>
+            <div class="form-group"><label>Tiền tố mã đơn hàng</label><input class="form-control" value="DH" style="max-width:120px"></div>
+            <div class="form-group" style="margin-bottom:0"><label>Nội dung CK mẫu</label><input class="form-control" value="EDUVIET {order_code}" readonly><div class="form-hint">Hệ thống tự điền · Ví dụ: EDUVIET DH20260529001</div></div>
+          </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div id="section-email" style="display:none">
+          <div class="card-dark mb-16">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Cấu hình Resend.com</div>
+            <div style="padding:10px 14px;border:1.5px solid #27ae60;border-radius:6px;background:#f0fff4;font-size:12px;color:#27ae60;margin-bottom:16px">✓ Kết nối thành công · 1.247 / 3.000 email đã gửi tháng này</div>
+            <div class="form-group"><label>Resend API Key</label><input class="form-control" type="password" value="re_xxxxxxxxxxxxxxxx"></div>
+            <div class="form-group"><label>Email gửi đi (From)</label><input class="form-control" value="hello@eduvietpro.vn"></div>
+            <div class="form-group" style="margin-bottom:0"><label>Tên hiển thị</label><input class="form-control" value="EduVietPro"></div>
+          </div>
+          <div class="card-dark">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Bật / tắt email tự động</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Email xác nhận đơn hàng</div><div class="text-xs text-gray">Gửi sau khi thanh toán thành công</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Email chào mừng đăng ký</div><div class="text-xs text-gray">Gửi khi học viên tạo tài khoản mới</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Email thông báo lead magnet</div><div class="text-xs text-gray">Gửi link Zoom webinar cho lead mới</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Email nhắc học bài</div><div class="text-xs text-gray">Gửi sau 7 ngày không đăng nhập</div></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Email thông báo rút tiền affiliate</div><div class="text-xs text-gray">Gửi khi admin duyệt yêu cầu rút tiền</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ANALYTICS -->
+        <div id="section-analytics" style="display:none">
+          <div class="card-dark mb-16">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Google Analytics 4</div>
+            <div class="form-group" style="margin-bottom:0"><label>Measurement ID</label><input class="form-control" value="G-XXXXXXXXXX" placeholder="G-XXXXXXXXXX"><div class="form-hint">Tìm trong GA4 → Admin → Data Streams</div></div>
+          </div>
+          <div class="card-dark mb-16">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Meta Pixel (Facebook)</div>
+            <div class="form-group" style="margin-bottom:0"><label>Pixel ID</label><input class="form-control" value="1234567890123456" placeholder="Pixel ID 16 chữ số"></div>
+          </div>
+          <div class="card-dark mb-16">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Microsoft Clarity</div>
+            <div class="form-group" style="margin-bottom:0"><label>Project ID</label><input class="form-control" value="xxxxxxxxxx" placeholder="Clarity Project ID"><div class="form-hint">Heatmap & session recording miễn phí</div></div>
+          </div>
+          <div class="card-dark">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Theo dõi video</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Ghi nhận % xem video</div><div class="text-xs text-gray">Lưu 25%, 50%, 75%, 100% vào database</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Gửi sự kiện lên GA4</div><div class="text-xs text-gray">video_progress, video_complete</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AFFILIATE SETTINGS -->
+        <div id="section-affiliate" style="display:none">
+          <div class="card-dark">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Cấu hình Affiliate</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="form-group"><label>Tỷ lệ hoa hồng (%)</label><input class="form-control" type="number" value="40" min="1" max="90"><div class="form-hint">Hiện tại: 40% cố định cho mọi đơn</div></div>
+              <div class="form-group"><label>Thời gian cookie (ngày)</label><input class="form-control" type="number" value="30" min="1" max="365"></div>
+              <div class="form-group"><label>Số tiền rút tối thiểu (₫)</label><input class="form-control" type="number" value="500000"></div>
+              <div class="form-group"><label>Chu kỳ thanh toán</label><select class="form-control"><option>Thủ công (khi admin duyệt)</option><option>Tự động hàng tháng</option></select></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px">
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Cho phép đăng ký affiliate</div><div class="text-xs text-gray">Học viên có thể tự đăng ký làm affiliate</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Yêu cầu duyệt trước</div><div class="text-xs text-gray">Admin duyệt trước khi cấp link affiliate</div></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEAD MAGNET -->
+        <div id="section-lead" style="display:none">
+          <div class="card-dark mb-16">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Popup Lead Magnet</div>
+            <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:18px">
+              <div class="flex-between"><div><div style="font-weight:600;font-size:13px">Bật popup lead magnet</div><div class="text-xs text-gray">Hiện popup sau khi vào trang</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="form-group"><label>Tiêu đề popup</label><input class="form-control" value="🎁 Nhận Ngay Webinar Miễn Phí"></div>
+              <div class="form-group"><label>Delay hiện popup (giây)</label><input class="form-control" type="number" value="4"></div>
+              <div class="form-group" style="grid-column:1/-1"><label>Mô tả ngắn</label><textarea class="form-control" rows="2">5 ngày học kỹ năng kinh doanh online miễn phí qua Zoom. Chỉ còn 12 chỗ!</textarea></div>
+              <div class="form-group"><label>Link Zoom / Nội dung gửi email</label><input class="form-control" value="https://zoom.us/j/xxxxxxxxxx"></div>
+              <div class="form-group"><label>Nút CTA</label><input class="form-control" value="Đăng Ký Ngay — Miễn Phí!"></div>
+            </div>
+          </div>
+          <div class="card-dark">
+            <div style="font-size:15px;font-weight:800;margin-bottom:18px">Google Sheets — Lưu Leads</div>
+            <div class="form-group"><label>Google Sheet ID</label><input class="form-control" value="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms"></div>
+            <div class="form-group" style="margin-bottom:0"><label>Tên sheet (tab)</label><input class="form-control" value="Leads"><div class="form-hint">Đảm bảo Service Account có quyền Editor trên sheet này</div></div>
+          </div>
+        </div>
+
+        <!-- INTEGRATIONS -->
+        <div id="section-integrations" style="display:none">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="card-dark">
+              <div class="flex-between">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:40px;height:40px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:20px">G</div>
+                  <div><div style="font-weight:700">Google OAuth</div><div class="text-xs text-gray">Đăng nhập bằng tài khoản Google</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span class="tag tag-success" style="font-size:11px">Đang hoạt động</span>
+                  <button class="btn-ghost btn-sm">Cấu hình</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-dark">
+              <div class="flex-between">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:40px;height:40px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:20px">📊</div>
+                  <div><div style="font-weight:700">Google Sheets API</div><div class="text-xs text-gray">Đồng bộ leads tự động</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span class="tag tag-success" style="font-size:11px">Đang hoạt động</span>
+                  <button class="btn-ghost btn-sm">Cấu hình</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-dark">
+              <div class="flex-between">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:40px;height:40px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:20px">📧</div>
+                  <div><div style="font-weight:700">Resend.com</div><div class="text-xs text-gray">Gửi email tự động</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span class="tag tag-success" style="font-size:11px">Đang hoạt động</span>
+                  <button class="btn-ghost btn-sm">Cấu hình</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-dark">
+              <div class="flex-between">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:40px;height:40px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:20px">💳</div>
+                  <div><div style="font-weight:700">SePay</div><div class="text-xs text-gray">Thanh toán tự động qua QR / chuyển khoản</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span class="tag tag-success" style="font-size:11px">Đang hoạt động</span>
+                  <button class="btn-ghost btn-sm">Cấu hình</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-dark">
+              <div class="flex-between">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:40px;height:40px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:20px">☁️</div>
+                  <div><div style="font-weight:700">Cloudflare R2</div><div class="text-xs text-gray">Lưu trữ ảnh, PDF, tài liệu đính kèm</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span class="tag tag-success" style="font-size:11px">Đang hoạt động</span>
+                  <button class="btn-ghost btn-sm">Cấu hình</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="save-toast" style="display:none;position:fixed;bottom:24px;right:24px;background:#000;color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;font-weight:600;z-index:999">✓ Đã lưu cài đặt thành công</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', true);
+const sections = ['general','payment','email','analytics','affiliate','lead','integrations'];
+function switchSection(id) {
+  sections.forEach(s => {
+    document.getElementById('section-'+s).style.display = s===id ? 'block' : 'none';
+    const nav = document.getElementById('snav-'+s);
+    nav.classList.toggle('active', s===id);
+  });
+}
+function saveAll(){
+  const t=document.getElementById('save-toast');
+  t.style.display='block';
+  setTimeout(()=>t.style.display='none',2500);
+}
+</script>
+</body>
+</html>

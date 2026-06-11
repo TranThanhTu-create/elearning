@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Xác Thực Email — EduVietPro</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body style="background:#f6f6f6">
+<div id="nav-placeholder"></div>
+<div style="min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;padding:32px 16px">
+  <div style="width:100%;max-width:440px">
+
+    <!-- STATE 1: PENDING (sau khi đăng ký, chưa click link) -->
+    <div id="state-pending">
+      <div style="text-align:center;margin-bottom:28px">
+        <a href="index.html" style="font-size:24px;font-weight:900;display:block;margin-bottom:8px">EduViet<span style="font-weight:400">Pro</span></a>
+      </div>
+      <div class="card-dark" style="text-align:center;padding:40px 32px">
+        <div style="width:72px;height:72px;border-radius:50%;background:#fffbe6;border:2px solid #f0a500;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px">📧</div>
+        <h1 style="font-size:20px;font-weight:900;margin-bottom:10px">Kiểm tra email của bạn</h1>
+        <p class="text-sm text-gray" style="margin-bottom:6px">Chúng tôi đã gửi link xác thực đến</p>
+        <p style="font-weight:800;font-size:16px;margin-bottom:20px">tuan.anh@gmail.com</p>
+        <div style="background:#fffbe6;border:1.5px solid #f0a500;border-radius:8px;padding:14px 16px;text-align:left;margin-bottom:24px">
+          <div class="text-sm" style="line-height:1.7">
+            <div style="margin-bottom:4px">📌 Mở hộp thư và tìm email từ <strong>no-reply@eduvietpro.vn</strong></div>
+            <div style="margin-bottom:4px">🖱️ Click vào nút <strong>"Xác thực tài khoản"</strong></div>
+            <div>⏱️ Link có hiệu lực trong <strong>24 giờ</strong></div>
+          </div>
+        </div>
+        <div style="border-top:1px solid #e8e8e8;padding-top:20px">
+          <p class="text-xs text-gray" style="margin-bottom:12px">Không nhận được email? Kiểm tra thư mục <strong>Spam / Rác</strong></p>
+          <button onclick="resend()" class="btn-ghost w-full" id="resend-btn">↻ Gửi lại email xác thực</button>
+          <div id="resend-msg" style="display:none;margin-top:10px;font-size:13px;color:#27ae60;font-weight:600">✓ Đã gửi lại! Kiểm tra email của bạn.</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:20px">
+        <p class="text-xs text-gray">Nhập nhầm email?
+          <a href="register.html" style="color:#000;font-weight:700;text-decoration:underline">Đăng ký lại</a>
+          hoặc <a href="login.html" style="color:#000;font-weight:700;text-decoration:underline">Đăng nhập</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- STATE 2: SUCCESS (sau khi click link trong email) -->
+    <div id="state-success" style="display:none">
+      <div style="text-align:center;margin-bottom:28px">
+        <a href="index.html" style="font-size:24px;font-weight:900;display:block;margin-bottom:8px">EduViet<span style="font-weight:400">Pro</span></a>
+      </div>
+      <div class="card-dark" style="text-align:center;padding:40px 32px">
+        <div style="width:72px;height:72px;border-radius:50%;background:#f0fff4;border:2px solid #27ae60;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px">✓</div>
+        <h1 style="font-size:22px;font-weight:900;margin-bottom:10px">Email đã được xác thực!</h1>
+        <p class="text-sm text-gray" style="margin-bottom:24px">Tài khoản của bạn đã được kích hoạt thành công. Bắt đầu khám phá khóa học ngay nhé!</p>
+        <a href="courses.html" class="btn-primary w-full" style="padding:13px;font-size:15px;text-decoration:none;display:block;margin-bottom:10px">🚀 Khám phá khóa học →</a>
+        <a href="login.html" class="btn-ghost w-full" style="padding:11px;font-size:14px;text-decoration:none;display:block">Đăng nhập ngay</a>
+      </div>
+    </div>
+
+    <!-- STATE 3: EXPIRED (link hết hạn) -->
+    <div id="state-expired" style="display:none">
+      <div style="text-align:center;margin-bottom:28px">
+        <a href="index.html" style="font-size:24px;font-weight:900;display:block;margin-bottom:8px">EduViet<span style="font-weight:400">Pro</span></a>
+      </div>
+      <div class="card-dark" style="text-align:center;padding:40px 32px">
+        <div style="width:72px;height:72px;border-radius:50%;background:#fff5f5;border:2px solid #c00;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px">⏱</div>
+        <h1 style="font-size:20px;font-weight:900;margin-bottom:10px">Link xác thực đã hết hạn</h1>
+        <p class="text-sm text-gray" style="margin-bottom:24px">Link xác thực chỉ có hiệu lực trong 24 giờ. Vui lòng yêu cầu gửi lại link mới.</p>
+        <button onclick="resendExpired()" class="btn-primary w-full" id="resend-expired-btn" style="padding:13px;font-size:15px;margin-bottom:10px">Gửi lại link xác thực</button>
+        <div id="resend-expired-msg" style="display:none;margin-top:10px;font-size:13px;color:#27ae60;font-weight:600">✓ Link mới đã được gửi!</div>
+        <a href="login.html" class="btn-ghost w-full" style="padding:11px;font-size:14px;text-decoration:none;display:block;margin-top:10px">Quay lại đăng nhập</a>
+      </div>
+    </div>
+
+    <!-- STATE 4: ALREADY VERIFIED -->
+    <div id="state-already" style="display:none">
+      <div style="text-align:center;margin-bottom:28px">
+        <a href="index.html" style="font-size:24px;font-weight:900;display:block;margin-bottom:8px">EduViet<span style="font-weight:400">Pro</span></a>
+      </div>
+      <div class="card-dark" style="text-align:center;padding:40px 32px">
+        <div style="width:72px;height:72px;border-radius:50%;background:#f0f4ff;border:2px solid #1a73e8;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px">ℹ</div>
+        <h1 style="font-size:20px;font-weight:900;margin-bottom:10px">Tài khoản đã được xác thực</h1>
+        <p class="text-sm text-gray" style="margin-bottom:24px">Email của bạn đã được xác thực trước đó. Bạn có thể đăng nhập ngay bây giờ.</p>
+        <a href="login.html" class="btn-primary w-full" style="padding:13px;font-size:15px;text-decoration:none;display:block">Đăng nhập →</a>
+      </div>
+    </div>
+
+    <!-- DEMO SWITCHER -->
+    <div style="margin-top:24px;padding:14px;border:1.5px dashed #ccc;border-radius:8px;background:#fff">
+      <div class="text-xs text-gray" style="margin-bottom:8px;font-weight:700">Demo — chuyển trạng thái:</div>
+      <div class="flex gap-8" style="flex-wrap:wrap">
+        <button class="btn-ghost btn-sm" onclick="showState('state-pending')">Chờ xác thực</button>
+        <button class="btn-ghost btn-sm" onclick="showState('state-success')">Thành công</button>
+        <button class="btn-ghost btn-sm" onclick="showState('state-expired')">Link hết hạn</button>
+        <button class="btn-ghost btn-sm" onclick="showState('state-already')">Đã xác thực</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', false);
+const states = ['state-pending','state-success','state-expired','state-already'];
+function showState(id){ states.forEach(s=>document.getElementById(s).style.display=s===id?'block':'none'); }
+function resend(){
+  const btn=document.getElementById('resend-btn');
+  const msg=document.getElementById('resend-msg');
+  btn.disabled=true; btn.textContent='Đang gửi...';
+  setTimeout(()=>{ btn.textContent='↻ Gửi lại email xác thực'; btn.disabled=false; msg.style.display='block'; },800);
+}
+function resendExpired(){
+  const btn=document.getElementById('resend-expired-btn');
+  const msg=document.getElementById('resend-expired-msg');
+  btn.disabled=true; btn.textContent='Đang gửi...';
+  setTimeout(()=>{ btn.textContent='Gửi lại link xác thực'; btn.disabled=false; msg.style.display='block'; },800);
+}
+</script>
+</body>
+</html>

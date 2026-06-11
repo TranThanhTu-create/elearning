@@ -1,0 +1,30 @@
+# Environment variables - KHÔNG BAO GIỜ push lên GitHub
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+logs/
+
+# Google Service Account (chứa thông tin nhạy cảm)
+google-service-account.json

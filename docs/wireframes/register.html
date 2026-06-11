@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Đăng Ký — EduVietPro</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body style="background:#f6f6f6">
+<div id="nav-placeholder"></div>
+<div style="min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;padding:32px 16px">
+  <div style="width:100%;max-width:460px">
+    <div style="text-align:center;margin-bottom:28px">
+      <a href="index.html" style="font-size:24px;font-weight:900;display:block;margin-bottom:8px">EduViet<span style="font-weight:400">Pro</span></a>
+      <h1 style="font-size:22px;font-weight:800">Tạo tài khoản miễn phí</h1>
+      <p class="text-sm text-gray mt-8">Đã có tài khoản? <a href="login.html" style="font-weight:700;color:#000;text-decoration:underline">Đăng nhập</a></p>
+    </div>
+
+    <div class="card-dark">
+      <button onclick="window.location.href='dashboard.html'" style="width:100%;padding:11px;border:1.5px solid #000;border-radius:8px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px">
+        <span style="font-size:18px">G</span> Đăng ký nhanh với Google
+      </button>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="flex:1;height:1px;background:#ddd"></div>
+        <span class="text-xs text-gray">hoặc điền thông tin bên dưới</span>
+        <div style="flex:1;height:1px;background:#ddd"></div>
+      </div>
+
+      <form onsubmit="doRegister(event)">
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom:14px">
+            <label>Họ và tên *</label>
+            <input class="form-control" type="text" placeholder="Nguyễn Văn An" required id="name">
+          </div>
+          <div class="form-group" style="margin-bottom:14px">
+            <label>Số điện thoại *</label>
+            <input class="form-control" type="tel" placeholder="0901 234 567" required id="phone">
+            <div class="form-hint">Dùng để hỗ trợ khi cần</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input class="form-control" type="email" placeholder="email@gmail.com" required id="email" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Mật khẩu *</label>
+          <div style="position:relative">
+            <input class="form-control" type="password" placeholder="Tối thiểu 8 ký tự" required id="password" autocomplete="new-password" style="padding-right:44px" oninput="checkStrength()">
+            <button type="button" onclick="togglePwd('password')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:#888;font-size:14px">👁</button>
+          </div>
+          <div id="strength-bar" style="height:4px;background:#e0e0e0;border-radius:2px;margin-top:6px;overflow:hidden"><div id="strength-fill" style="height:100%;width:0;border-radius:2px;transition:width .3s,background .3s"></div></div>
+          <div id="strength-label" class="form-hint"></div>
+        </div>
+        <div class="form-group">
+          <label>Xác nhận mật khẩu *</label>
+          <div style="position:relative">
+            <input class="form-control" type="password" placeholder="Nhập lại mật khẩu" required id="confirm" autocomplete="new-password" style="padding-right:44px">
+            <button type="button" onclick="togglePwd('confirm')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:#888;font-size:14px">👁</button>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:16px">
+          <input type="checkbox" id="agree" required style="margin-top:3px;width:16px;height:16px;flex-shrink:0">
+          <label for="agree" class="text-sm" style="line-height:1.6;cursor:pointer">Tôi đồng ý với <a href="#" style="color:#000;text-decoration:underline">Điều khoản sử dụng</a> và <a href="#" style="color:#000;text-decoration:underline">Chính sách bảo mật</a> của EduVietPro</label>
+        </div>
+
+        <div id="reg-error" style="display:none;padding:10px 14px;border:1.5px solid #c00;border-radius:6px;font-size:13px;color:#c00;margin-bottom:14px;background:#fff8f8"></div>
+        <button type="submit" class="btn-primary w-full" style="padding:12px;font-size:15px">Tạo Tài Khoản Miễn Phí →</button>
+      </form>
+    </div>
+
+    <!-- BENEFITS -->
+    <div style="margin-top:20px;padding:16px;border:1.5px solid #ddd;border-radius:10px;background:#fff">
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888;margin-bottom:10px">Sau khi đăng ký bạn có thể</div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div class="flex-center gap-8 text-sm"><span>✓</span><span>Xem thử hàng chục video miễn phí</span></div>
+        <div class="flex-center gap-8 text-sm"><span>✓</span><span>Mua và học bất kỳ khóa nào — truy cập mãi mãi</span></div>
+        <div class="flex-center gap-8 text-sm"><span>✓</span><span>Tham gia chương trình affiliate 40% hoa hồng</span></div>
+        <div class="flex-center gap-8 text-sm"><span>✓</span><span>Theo dõi tiến độ học trên mọi thiết bị</span></div>
+      </div>
+    </div>
+
+    <p class="text-xs text-gray text-center mt-12">Đăng ký hoàn toàn miễn phí. Không cần thẻ tín dụng.</p>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', false);
+function togglePwd(id){ const f=document.getElementById(id); f.type=f.type==='password'?'text':'password'; }
+function checkStrength(){
+  const v=document.getElementById('password').value;
+  const fill=document.getElementById('strength-fill');
+  const label=document.getElementById('strength-label');
+  let score=0;
+  if(v.length>=8) score++;
+  if(/[A-Z]/.test(v)) score++;
+  if(/[0-9]/.test(v)) score++;
+  if(/[^A-Za-z0-9]/.test(v)) score++;
+  const colors=['#e0e0e0','#c00','#e67e22','#27ae60','#000'];
+  const labels=['','Yếu','Trung bình','Tốt','Rất mạnh'];
+  fill.style.width=(score*25)+'%';
+  fill.style.background=colors[score];
+  label.textContent=score>0?'Độ mạnh: '+labels[score]:'';
+  label.style.color=colors[score];
+}
+function doRegister(e){
+  e.preventDefault();
+  const pwd=document.getElementById('password').value;
+  const confirm=document.getElementById('confirm').value;
+  const err=document.getElementById('reg-error');
+  if(pwd!==confirm){ err.style.display='block'; err.textContent='Mật khẩu xác nhận không khớp.'; return; }
+  if(pwd.length<8){ err.style.display='block'; err.textContent='Mật khẩu phải có tối thiểu 8 ký tự.'; return; }
+  window.location.href='dashboard.html';
+}
+</script>
+</body>
+</html>

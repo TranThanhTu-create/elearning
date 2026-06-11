@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Affiliate Dashboard — EduVietPro</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="container" style="padding-top:28px;padding-bottom:60px">
+
+  <div class="flex-between mb-8" style="flex-wrap:wrap;gap:12px">
+    <div>
+      <h1 style="font-size:24px;font-weight:900">Affiliate Dashboard</h1>
+      <p class="text-sm text-gray mt-8">Hoa hồng 40% · Cookie 30 ngày · Rút tiền tối thiểu 500.000 ₫</p>
+    </div>
+    <a href="dashboard.html" class="btn-ghost btn-sm">← Về Dashboard</a>
+  </div>
+
+  <!-- LINK AFFILIATE -->
+  <div class="card-dark mb-24">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#666;margin-bottom:10px">Link Affiliate Của Bạn</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div class="aff-link-box" style="flex:1;min-width:200px">
+        <span>eduvietpro.vn/courses?ref=<strong>AN8X2K</strong></span>
+      </div>
+      <button class="btn-primary" onclick="copyLink()">📋 Sao chép</button>
+      <button class="btn-ghost" onclick="shareLink()">📤 Chia sẻ</button>
+    </div>
+    <div class="text-xs text-gray mt-8">Mỗi người click link này và mua khóa trong 30 ngày → bạn nhận 40% hoa hồng tự động</div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metric-grid mb-24">
+    <div class="metric-card">
+      <div class="metric-label">Tổng lượt click</div>
+      <div class="metric-value">1.893</div>
+      <div class="metric-change">↑ 142 trong tháng này</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Đơn thành công</div>
+      <div class="metric-value">187</div>
+      <div class="metric-change">↑ 12 trong tháng này</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Tổng hoa hồng</div>
+      <div class="metric-value" style="font-size:22px">28.340.000 ₫</div>
+      <div class="metric-change">↑ 3.560.000 ₫ tháng này</div>
+    </div>
+    <div class="metric-card" style="border-color:#000;background:#f6f6f6">
+      <div class="metric-label">Chưa rút</div>
+      <div class="metric-value" style="font-size:22px">3.560.000 ₫</div>
+      <div class="mt-12"><button class="btn-primary w-full" onclick="showWithdraw()">Rút tiền ngay</button></div>
+    </div>
+  </div>
+
+  <!-- BIỂU ĐỒ GIẢ LẬP -->
+  <div class="card-dark mb-24">
+    <div class="flex-between mb-16">
+      <div style="font-weight:700">Hoa hồng theo tháng</div>
+      <select class="filter-select" style="font-size:12px;padding:4px 8px">
+        <option>6 tháng gần nhất</option>
+        <option>12 tháng gần nhất</option>
+      </select>
+    </div>
+    <div style="display:flex;align-items:flex-end;gap:10px;height:140px;border-bottom:2px solid #000;padding-bottom:4px">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="font-size:10px;color:#888">3.1tr</div>
+        <div style="background:#000;width:100%;height:62%"></div>
+        <div style="font-size:10px;color:#666">Th.12</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="font-size:10px;color:#888">4.2tr</div>
+        <div style="background:#000;width:100%;height:84%"></div>
+        <div style="font-size:10px;color:#666">Th.1</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="font-size:10px;color:#888">3.8tr</div>
+        <div style="background:#000;width:100%;height:76%"></div>
+        <div style="font-size:10px;color:#666">Th.2</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="font-size:10px;color:#888">5.1tr</div>
+        <div style="background:#000;width:100%;height:100%"></div>
+        <div style="font-size:10px;color:#666">Th.3</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="font-size:10px;color:#888">4.7tr</div>
+        <div style="background:#ccc;width:100%;height:92%"></div>
+        <div style="font-size:10px;color:#666">Th.4</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="font-size:10px;color:#888">3.6tr</div>
+        <div style="background:#ccc;width:100%;height:72%;border:2px dashed #000"></div>
+        <div style="font-size:10px;color:#000;font-weight:700">Th.5</div>
+      </div>
+    </div>
+    <div class="text-xs text-gray mt-8">Cột đậm = đã hoàn thành · Cột viền đứt = tháng hiện tại</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <!-- LỊCH SỬ HOA HỒNG -->
+    <div>
+      <div style="font-weight:700;margin-bottom:14px">Hoa hồng gần đây</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ngày</th><th>Khóa học</th><th>Hoa hồng</th><th>TT</th></tr></thead>
+          <tbody>
+            <tr><td class="text-xs">29/05/2026</td><td class="text-xs">Quay Video</td><td style="font-weight:700">+596.000 ₫</td><td><span class="tag tag-success" style="font-size:10px">Duyệt</span></td></tr>
+            <tr><td class="text-xs">28/05/2026</td><td class="text-xs">Marketing A-Z</td><td style="font-weight:700">+396.000 ₫</td><td><span class="tag tag-success" style="font-size:10px">Duyệt</span></td></tr>
+            <tr><td class="text-xs">27/05/2026</td><td class="text-xs">TikTok MKT</td><td style="font-weight:700">+516.000 ₫</td><td><span class="tag tag-success" style="font-size:10px">Duyệt</span></td></tr>
+            <tr><td class="text-xs">26/05/2026</td><td class="text-xs">Facebook Ads</td><td style="font-weight:700">+476.000 ₫</td><td><span class="tag tag-success" style="font-size:10px">Duyệt</span></td></tr>
+            <tr><td class="text-xs">25/05/2026</td><td class="text-xs">Kinh doanh</td><td style="font-weight:700">+796.000 ₫</td><td><span class="tag tag-pending" style="font-size:10px">Chờ</span></td></tr>
+            <tr><td class="text-xs">24/05/2026</td><td class="text-xs">Quay Video</td><td style="font-weight:700">+596.000 ₫</td><td><span class="tag tag-pending" style="font-size:10px">Chờ</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- LỊCH SỬ RÚT TIỀN -->
+    <div>
+      <div style="font-weight:700;margin-bottom:14px">Lịch sử rút tiền</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ngày</th><th>Số tiền</th><th>Trạng thái</th></tr></thead>
+          <tbody>
+            <tr><td class="text-xs">01/05/2026</td><td style="font-weight:700">5.000.000 ₫</td><td><span class="tag tag-success" style="font-size:10px">Đã chuyển</span></td></tr>
+            <tr><td class="text-xs">01/04/2026</td><td style="font-weight:700">4.200.000 ₫</td><td><span class="tag tag-success" style="font-size:10px">Đã chuyển</span></td></tr>
+            <tr><td class="text-xs">01/03/2026</td><td style="font-weight:700">3.800.000 ₫</td><td><span class="tag tag-success" style="font-size:10px">Đã chuyển</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-16 card" style="background:#f6f6f6">
+        <div class="text-sm"><strong>Tổng đã rút:</strong> 13.000.000 ₫</div>
+        <div class="text-sm mt-8"><strong>Còn lại chưa rút:</strong> <span style="font-size:16px;font-weight:900">3.560.000 ₫</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HƯỚNG DẪN -->
+  <div style="margin-top:28px;padding:20px;border:1.5px solid #000;border-radius:10px;background:#f6f6f6">
+    <div style="font-weight:700;margin-bottom:12px">📌 Hướng dẫn kiếm hoa hồng hiệu quả</div>
+    <div class="grid-3" style="gap:12px">
+      <div class="text-sm"><strong>1. Chia sẻ đúng đối tượng</strong><br><span class="text-gray">Chia sẻ vào group Facebook, Zalo liên quan đến nội dung khóa học</span></div>
+      <div class="text-sm"><strong>2. Viết review thực tế</strong><br><span class="text-gray">Chia sẻ trải nghiệm thật của bạn sau khi học giúp tăng tỷ lệ mua</span></div>
+      <div class="text-sm"><strong>3. Tạo link cho từng khóa</strong><br><span class="text-gray">Mỗi khóa học có link riêng — chia sẻ đúng khóa phù hợp mỗi đối tượng</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WITHDRAW MODAL -->
+<div id="withdraw-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:16px">
+  <div style="background:#fff;border:2px solid #000;border-radius:12px;width:100%;max-width:420px;overflow:hidden">
+    <div style="background:#000;color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:800">Yêu Cầu Rút Tiền</div>
+      <button onclick="hideWithdraw()" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer">✕</button>
+    </div>
+    <div style="padding:20px">
+      <div class="notice mb-16">Số tiền có thể rút: <strong>3.560.000 ₫</strong></div>
+      <div class="form-group"><label>Số tiền muốn rút (₫)</label><input class="form-control" type="number" placeholder="500.000" min="500000" max="3560000"></div>
+      <div class="form-group"><label>Ngân hàng</label>
+        <select class="form-control"><option>Vietcombank</option><option>Techcombank</option><option>MB Bank</option><option>Bidv</option><option>Agribank</option><option>VPBank</option></select>
+      </div>
+      <div class="form-group"><label>Số tài khoản</label><input class="form-control" placeholder="1234567890"></div>
+      <div class="form-group"><label>Tên chủ tài khoản</label><input class="form-control" placeholder="NGUYEN TUAN ANH"></div>
+      <div class="text-xs text-gray mb-16">Thời gian xử lý: 3–7 ngày làm việc sau khi admin phê duyệt</div>
+      <button class="btn-primary w-full" style="padding:12px" onclick="submitWithdraw()">Gửi Yêu Cầu Rút Tiền</button>
+    </div>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', true);
+function copyLink(){ navigator.clipboard?.writeText('eduvietpro.vn/courses?ref=AN8X2K'); alert('Đã sao chép link affiliate!'); }
+function shareLink(){ alert('Mở hộp thoại chia sẻ mạng xã hội'); }
+function showWithdraw(){ document.getElementById('withdraw-modal').style.display='flex'; }
+function hideWithdraw(){ document.getElementById('withdraw-modal').style.display='none'; }
+function submitWithdraw(){ hideWithdraw(); alert('Đã gửi yêu cầu rút tiền. Admin sẽ xử lý trong 3–7 ngày làm việc.'); }
+</script>
+</body>
+</html>

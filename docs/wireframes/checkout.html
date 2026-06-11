@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thanh Toán — EduVietPro</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<div class="container" style="padding-top:36px;padding-bottom:60px;max-width:860px">
+  <div class="flex-center gap-8 mb-24">
+    <div style="width:28px;height:28px;border-radius:50%;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">1</div>
+    <div style="flex:1;height:2px;background:#000"></div>
+    <div style="width:28px;height:28px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:12px;color:#ccc">2</div>
+    <div style="flex:1;height:2px;background:#ccc"></div>
+    <div style="width:28px;height:28px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:12px;color:#ccc">3</div>
+  </div>
+  <div class="flex gap-8 mb-8" style="justify-content:space-between;font-size:12px;color:#888;margin-top:-16px;margin-bottom:24px">
+    <span style="color:#000;font-weight:700">Xác nhận</span>
+    <span>Thanh toán</span>
+    <span>Hoàn tất</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start" id="checkout-grid">
+    <!-- LEFT -->
+    <div>
+      <h1 style="font-size:22px;font-weight:900;margin-bottom:20px">Xác Nhận & Thanh Toán</h1>
+
+      <!-- THÔNG TIN ĐƠN HÀNG -->
+      <div class="card-dark" style="margin-bottom:20px">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:14px;color:#666">Khóa học bạn đang mua</div>
+        <div class="flex gap-12" style="align-items:center">
+          <div style="width:80px;height:56px;background:#e0e0e0;border:1.5px solid #000;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888">Thumb</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:14px;margin-bottom:3px">Quay Video Chuyên Nghiệp Bằng Điện Thoại</div>
+            <div class="text-xs text-gray">48 bài · 12 giờ · Truy cập trọn đời</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-size:18px;font-weight:900">1.490.000 ₫</div>
+            <div style="font-size:12px;text-decoration:line-through;color:#999">1.990.000 ₫</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÃ GIẢM GIÁ -->
+      <div class="card" style="margin-bottom:20px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Mã Giảm Giá</div>
+        <div class="flex gap-8">
+          <input class="form-control" type="text" placeholder="Nhập mã giảm giá (VD: EDUVIET20)" id="coupon-input" style="flex:1">
+          <button class="btn-ghost" onclick="applyCoupon()" style="white-space:nowrap">Áp dụng</button>
+        </div>
+        <div id="coupon-msg" class="text-xs mt-8" style="display:none"></div>
+      </div>
+
+      <!-- PHƯƠNG THỨC THANH TOÁN -->
+      <div class="card-dark" style="margin-bottom:20px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:14px">Phương Thức Thanh Toán</div>
+        <div style="border:2px solid #000;border-radius:8px;padding:14px;background:#f6f6f6;margin-bottom:10px">
+          <div class="flex-center gap-10">
+            <input type="radio" name="payment" checked style="width:16px;height:16px">
+            <div>
+              <div style="font-weight:700;font-size:14px">Chuyển khoản ngân hàng / QR SePay</div>
+              <div class="text-xs text-gray">Tự động xác nhận ngay khi nhận tiền · Hỗ trợ mọi ngân hàng</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR THANH TOÁN -->
+      <div class="card-dark" id="qr-section">
+        <div style="text-align:center;margin-bottom:16px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px">Quét mã QR hoặc chuyển khoản theo thông tin bên dưới</div>
+          <div class="text-xs text-gray">Hệ thống tự động xác nhận sau khi nhận được tiền (thường dưới 30 giây)</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center">
+          <div style="text-align:center">
+            <div class="qr-box">
+              <div class="qr-inner">QR Code<br>SePay</div>
+              <div style="font-size:10px;color:#888;margin-top:4px">Quét bằng app ngân hàng</div>
+            </div>
+          </div>
+          <div>
+            <div style="margin-bottom:10px">
+              <div class="text-xs text-gray mb-8">Ngân hàng</div>
+              <div style="font-weight:700">Vietcombank</div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div class="text-xs text-gray mb-8">Số tài khoản</div>
+              <div style="font-weight:900;font-size:18px;letter-spacing:1px">1234 5678 90</div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div class="text-xs text-gray mb-8">Chủ tài khoản</div>
+              <div style="font-weight:700">NGUYEN TUAN ANH</div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div class="text-xs text-gray mb-8">Số tiền</div>
+              <div style="font-size:22px;font-weight:900;color:#000">1.490.000 ₫</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray mb-8">Nội dung chuyển khoản</div>
+              <div style="font-weight:900;font-size:15px;background:#f0f0f0;border:1.5px solid #000;border-radius:6px;padding:8px 12px;letter-spacing:1px;display:flex;align-items:center;justify-content:space-between">
+                DH20260529001
+                <button onclick="copyCode()" style="border:none;background:none;cursor:pointer;font-size:11px;font-weight:700;color:#666">📋 Sao chép</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider-dark"></div>
+
+        <div style="text-align:center">
+          <div class="countdown" id="timer">29:47</div>
+          <div class="countdown-label">Thời gian còn lại để hoàn tất thanh toán</div>
+          <div class="notice" style="margin-top:14px;text-align:left">
+            <strong>⏳ Đang chờ xác nhận thanh toán...</strong><br>
+            <span class="text-xs text-gray">Sau khi chuyển khoản, hệ thống sẽ tự động mở khóa khóa học và gửi email xác nhận cho bạn</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT SUMMARY -->
+    <div class="sidebar">
+      <div class="card-dark">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:14px;color:#666">Tóm tắt đơn hàng</div>
+        <div class="flex-between text-sm mb-8">
+          <span>Giá gốc</span><span style="text-decoration:line-through;color:#999">1.990.000 ₫</span>
+        </div>
+        <div class="flex-between text-sm mb-8">
+          <span>Ưu đãi</span><span style="color:#000;font-weight:700">-500.000 ₫</span>
+        </div>
+        <div id="coupon-row" class="flex-between text-sm mb-8" style="display:none!important">
+          <span>Mã giảm giá</span><span style="color:#000;font-weight:700" id="coupon-amount"></span>
+        </div>
+        <div class="divider-dark"></div>
+        <div class="flex-between" style="font-size:20px;font-weight:900">
+          <span>Tổng cộng</span><span id="total-price">1.490.000 ₫</span>
+        </div>
+        <div class="text-xs text-gray text-center mt-8">Đã bao gồm VAT (nếu có)</div>
+
+        <div class="divider"></div>
+        <div style="font-size:12px;color:#555;display:flex;flex-direction:column;gap:6px">
+          <div class="flex-center gap-8"><span>🔒</span><span>Thanh toán bảo mật qua SePay</span></div>
+          <div class="flex-center gap-8"><span>♾️</span><span>Truy cập trọn đời sau khi mua</span></div>
+          <div class="flex-center gap-8"><span>📱</span><span>Xem trên mọi thiết bị</span></div>
+          <div class="flex-center gap-8"><span>↩️</span><span>Hỗ trợ hoàn tiền trong 7 ngày</span></div>
+        </div>
+
+        <div class="divider"></div>
+        <div style="font-size:12px;color:#888;text-align:center">
+          Cần hỗ trợ? <strong>0901 234 567</strong><br>
+          <span>support@eduvietpro.vn</span>
+        </div>
+      </div>
+
+      <div class="mt-16">
+        <a href="checkout-success.html" class="btn-primary w-full" style="display:block;text-align:center;padding:13px;font-size:14px">Giả lập: Thanh toán thành công →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('courses.html', false);
+let seconds = 29*60+47;
+setInterval(()=>{
+  if(seconds<=0) return;
+  seconds--;
+  const m=Math.floor(seconds/60).toString().padStart(2,'0');
+  const s=(seconds%60).toString().padStart(2,'0');
+  document.getElementById('timer').textContent=`${m}:${s}`;
+},1000);
+function applyCoupon(){
+  const val=document.getElementById('coupon-input').value.trim().toUpperCase();
+  const msg=document.getElementById('coupon-msg');
+  if(val==='EDUVIET20'){
+    msg.style.display='block';msg.style.color='#006600';
+    msg.textContent='✓ Áp dụng thành công! Giảm thêm 298.000 ₫';
+    document.getElementById('total-price').textContent='1.192.000 ₫';
+  } else if(val){
+    msg.style.display='block';msg.style.color='#cc0000';
+    msg.textContent='✗ Mã giảm giá không hợp lệ hoặc đã hết hạn';
+  }
+}
+function copyCode(){
+  navigator.clipboard.writeText('DH20260529001');
+  alert('Đã sao chép: DH20260529001');
+}
+// responsive
+if(window.innerWidth<768) document.getElementById('checkout-grid').style.gridTemplateColumns='1fr';
+</script>
+</body>
+</html>

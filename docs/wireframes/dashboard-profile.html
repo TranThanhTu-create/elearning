@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hồ Sơ Cá Nhân — EduVietPro</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="container" style="padding-top:28px;padding-bottom:60px">
+
+  <!-- HEADER -->
+  <div class="flex-between mb-24" style="flex-wrap:wrap;gap:12px">
+    <div>
+      <h1 style="font-size:22px;font-weight:900">Hồ Sơ & Cài Đặt</h1>
+      <p class="text-sm text-gray mt-4">Quản lý thông tin tài khoản của bạn</p>
+    </div>
+    <a href="dashboard.html" class="btn-ghost btn-sm">← Về Dashboard</a>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-bar" style="margin-bottom:28px">
+    <div class="tab active" onclick="switchTab(this,'tab-info')">👤 Thông tin cá nhân</div>
+    <div class="tab" onclick="switchTab(this,'tab-password')">🔒 Đổi mật khẩu</div>
+    <div class="tab" onclick="switchTab(this,'tab-danger')">⚠️ Xóa tài khoản</div>
+  </div>
+
+  <!-- TAB 1: THÔNG TIN CÁ NHÂN -->
+  <div id="tab-info" class="tab-content active" style="max-width:640px">
+
+    <!-- AVATAR -->
+    <div class="card-dark" style="margin-bottom:20px">
+      <div style="font-weight:800;font-size:15px;margin-bottom:18px">Ảnh đại diện</div>
+      <div class="flex-center gap-20" style="flex-wrap:wrap">
+        <div style="position:relative;display:inline-block">
+          <div style="width:88px;height:88px;border-radius:50%;background:#e0e0e0;border:3px solid #000;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;overflow:hidden" id="avatar-preview">TA</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:14px;margin-bottom:6px">Nguyễn Tuấn Anh</div>
+          <div class="text-sm text-gray" style="margin-bottom:12px">JPG, PNG tối đa 2MB · Khuyến nghị 200×200px</div>
+          <div class="flex gap-8">
+            <label style="cursor:pointer">
+              <input type="file" accept="image/*" style="display:none" onchange="previewAvatar(this)">
+              <span class="btn-ghost btn-sm">📷 Tải ảnh lên</span>
+            </label>
+            <button class="btn-ghost btn-sm" onclick="removeAvatar()" style="color:#c00;border-color:#c00">Xóa ảnh</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THÔNG TIN CƠ BẢN -->
+    <div class="card-dark" style="margin-bottom:20px">
+      <div style="font-weight:800;font-size:15px;margin-bottom:18px">Thông tin cơ bản</div>
+      <form onsubmit="saveInfo(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="responsive-grid">
+          <div class="form-group">
+            <label>Họ và tên *</label>
+            <input class="form-control" type="text" value="Nguyễn Tuấn Anh" required>
+          </div>
+          <div class="form-group">
+            <label>Số điện thoại</label>
+            <input class="form-control" type="tel" value="0912 345 678" placeholder="0901 234 567">
+            <div class="form-hint">Dùng để nhận hỗ trợ qua Zalo</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input class="form-control" type="email" value="tuan.anh@gmail.com" disabled style="background:#f4f4f4;color:#888;cursor:not-allowed">
+          <div class="form-hint">Email không thể thay đổi · <a href="#" style="color:#000;text-decoration:underline">Liên hệ hỗ trợ</a> nếu cần</div>
+        </div>
+        <div id="save-info-msg" style="display:none;padding:10px 14px;border:1.5px solid #27ae60;border-radius:6px;font-size:13px;color:#27ae60;background:#f0fff4;margin-bottom:14px">✓ Thông tin đã được cập nhật thành công!</div>
+        <button type="submit" class="btn-primary" style="padding:10px 24px">Lưu thay đổi</button>
+      </form>
+    </div>
+
+    <!-- ĐĂNG NHẬP LIÊN KẾT -->
+    <div class="card-dark">
+      <div style="font-weight:800;font-size:15px;margin-bottom:18px">Phương thức đăng nhập</div>
+      <div class="flex-between" style="padding:12px 0;border-bottom:1px solid #eee">
+        <div class="flex-center gap-12">
+          <span style="font-size:20px">📧</span>
+          <div>
+            <div style="font-weight:700;font-size:14px">Email & Mật khẩu</div>
+            <div class="text-xs text-gray">tuan.anh@gmail.com</div>
+          </div>
+        </div>
+        <span style="font-size:12px;padding:4px 10px;border:1.5px solid #27ae60;border-radius:20px;color:#27ae60;font-weight:700">Đã kết nối</span>
+      </div>
+      <div class="flex-between" style="padding:12px 0">
+        <div class="flex-center gap-12">
+          <span style="font-size:20px">G</span>
+          <div>
+            <div style="font-weight:700;font-size:14px">Google</div>
+            <div class="text-xs text-gray">Chưa liên kết</div>
+          </div>
+        </div>
+        <button onclick="linkGoogle()" class="btn-ghost btn-sm">Liên kết</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: ĐỔI MẬT KHẨU -->
+  <div id="tab-password" class="tab-content" style="max-width:480px">
+    <div class="card-dark">
+      <div style="font-weight:800;font-size:15px;margin-bottom:18px">Đổi mật khẩu</div>
+      <form onsubmit="changePwd(event)">
+        <div class="form-group">
+          <label>Mật khẩu hiện tại *</label>
+          <div style="position:relative">
+            <input class="form-control" type="password" id="cur-pwd" placeholder="Nhập mật khẩu hiện tại" required style="padding-right:44px">
+            <button type="button" onclick="togglePwd('cur-pwd')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:#888">👁</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mật khẩu mới *</label>
+          <div style="position:relative">
+            <input class="form-control" type="password" id="new-pwd" placeholder="Tối thiểu 8 ký tự" required style="padding-right:44px" oninput="checkStrength()">
+            <button type="button" onclick="togglePwd('new-pwd')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:#888">👁</button>
+          </div>
+          <div id="strength-bar" style="height:4px;background:#e0e0e0;border-radius:2px;margin-top:6px;overflow:hidden"><div id="strength-fill" style="height:100%;width:0;border-radius:2px;transition:width .3s,background .3s"></div></div>
+          <div id="strength-label" class="form-hint"></div>
+        </div>
+        <div class="form-group">
+          <label>Xác nhận mật khẩu mới *</label>
+          <div style="position:relative">
+            <input class="form-control" type="password" id="confirm-pwd" placeholder="Nhập lại mật khẩu mới" required style="padding-right:44px">
+            <button type="button" onclick="togglePwd('confirm-pwd')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:#888">👁</button>
+          </div>
+        </div>
+        <div id="pwd-error" style="display:none;padding:10px 14px;border:1.5px solid #c00;border-radius:6px;font-size:13px;color:#c00;background:#fff8f8;margin-bottom:14px"></div>
+        <div id="pwd-success" style="display:none;padding:10px 14px;border:1.5px solid #27ae60;border-radius:6px;font-size:13px;color:#27ae60;background:#f0fff4;margin-bottom:14px">✓ Mật khẩu đã được cập nhật! Vui lòng đăng nhập lại.</div>
+        <div class="flex gap-10">
+          <button type="submit" class="btn-primary" style="padding:10px 24px">Cập nhật mật khẩu</button>
+          <button type="button" class="btn-ghost" onclick="document.getElementById('tab-password').querySelector('form').reset()">Hủy</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card" style="margin-top:16px;padding:16px">
+      <div class="text-sm" style="line-height:1.7">
+        <div style="font-weight:700;margin-bottom:8px">Yêu cầu mật khẩu mạnh:</div>
+        <div class="text-gray">✓ Tối thiểu 8 ký tự</div>
+        <div class="text-gray">✓ Có ít nhất 1 chữ hoa (A–Z)</div>
+        <div class="text-gray">✓ Có ít nhất 1 chữ số (0–9)</div>
+        <div class="text-gray">✓ Có ký tự đặc biệt (!@#$%) là tốt nhất</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: XÓA TÀI KHOẢN -->
+  <div id="tab-danger" class="tab-content" style="max-width:560px">
+    <div class="card-dark" style="border:2px solid #c00">
+      <div style="font-weight:800;font-size:15px;margin-bottom:6px;color:#c00">⚠️ Xóa tài khoản vĩnh viễn</div>
+      <p class="text-sm text-gray" style="margin-bottom:20px;line-height:1.7">Hành động này <strong>không thể hoàn tác</strong>. Toàn bộ dữ liệu cá nhân sẽ bị xóa. Lịch sử giao dịch và quyền truy cập khóa học sẽ bị thu hồi.</p>
+
+      <div style="background:#fff5f5;border:1px solid #f5c6c6;border-radius:8px;padding:14px 16px;margin-bottom:20px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:8px">Những gì sẽ bị mất:</div>
+        <div class="text-sm" style="line-height:2;color:#666">
+          ✗ Quyền truy cập toàn bộ khóa học đã mua<br>
+          ✗ Tiến độ học và ghi chú bài học<br>
+          ✗ Hoa hồng affiliate chưa rút<br>
+          ✗ Thông tin hồ sơ cá nhân
+        </div>
+      </div>
+
+      <div id="delete-confirm-form" style="display:none">
+        <div class="form-group">
+          <label>Nhập <strong>XOA TAI KHOAN</strong> để xác nhận *</label>
+          <input class="form-control" type="text" id="delete-confirm-text" placeholder="XOA TAI KHOAN" oninput="checkDeleteConfirm()">
+        </div>
+        <div class="form-group">
+          <label>Mật khẩu hiện tại *</label>
+          <input class="form-control" type="password" id="delete-pwd" placeholder="Xác nhận mật khẩu">
+        </div>
+        <div id="delete-error" style="display:none;padding:10px 14px;border:1.5px solid #c00;border-radius:6px;font-size:13px;color:#c00;background:#fff8f8;margin-bottom:14px"></div>
+        <div class="flex gap-10">
+          <button id="delete-submit-btn" onclick="submitDelete()" class="btn-primary" style="background:#c00;border-color:#c00;padding:10px 20px" disabled>Xóa tài khoản vĩnh viễn</button>
+          <button class="btn-ghost" onclick="cancelDelete()">Hủy</button>
+        </div>
+      </div>
+
+      <div id="delete-trigger" class="flex gap-10">
+        <button onclick="showDeleteForm()" style="padding:10px 20px;background:#fff;border:2px solid #c00;color:#c00;border-radius:6px;font-weight:700;cursor:pointer;font-size:14px">Tôi muốn xóa tài khoản</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;padding:16px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:8px">Trước khi xóa, hãy thử:</div>
+      <div class="text-sm text-gray" style="line-height:1.8">
+        • Liên hệ hỗ trợ nếu gặp vấn đề kỹ thuật<br>
+        • Yêu cầu tạm dừng tài khoản thay vì xóa hẳn<br>
+        • Rút hoa hồng affiliate còn lại trước khi xóa
+      </div>
+      <a href="mailto:support@eduvietpro.vn" class="btn-ghost btn-sm" style="margin-top:12px;display:inline-block">✉ Liên hệ hỗ trợ</a>
+    </div>
+  </div>
+
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('dashboard.html', true);
+function switchTab(el, id) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+function togglePwd(id){ const f=document.getElementById(id); f.type=f.type==='password'?'text':'password'; }
+function checkStrength(){
+  const v=document.getElementById('new-pwd').value;
+  const fill=document.getElementById('strength-fill');
+  const label=document.getElementById('strength-label');
+  let score=0;
+  if(v.length>=8) score++; if(/[A-Z]/.test(v)) score++;
+  if(/[0-9]/.test(v)) score++; if(/[^A-Za-z0-9]/.test(v)) score++;
+  const colors=['#e0e0e0','#c00','#e67e22','#27ae60','#000'];
+  const labels=['','Yếu','Trung bình','Tốt','Rất mạnh'];
+  fill.style.width=(score*25)+'%'; fill.style.background=colors[score];
+  label.textContent=score>0?'Độ mạnh: '+labels[score]:''; label.style.color=colors[score];
+}
+function saveInfo(e){
+  e.preventDefault();
+  const msg=document.getElementById('save-info-msg');
+  msg.style.display='block';
+  setTimeout(()=>msg.style.display='none',4000);
+}
+function changePwd(e){
+  e.preventDefault();
+  const err=document.getElementById('pwd-error');
+  const ok=document.getElementById('pwd-success');
+  const p=document.getElementById('new-pwd').value;
+  const c=document.getElementById('confirm-pwd').value;
+  err.style.display='none'; ok.style.display='none';
+  if(p.length<8){ err.style.display='block'; err.textContent='Mật khẩu mới phải có tối thiểu 8 ký tự.'; return; }
+  if(p!==c){ err.style.display='block'; err.textContent='Mật khẩu xác nhận không khớp.'; return; }
+  ok.style.display='block';
+}
+function showDeleteForm(){ document.getElementById('delete-trigger').style.display='none'; document.getElementById('delete-confirm-form').style.display='block'; }
+function cancelDelete(){ document.getElementById('delete-trigger').style.display='flex'; document.getElementById('delete-confirm-form').style.display='none'; }
+function checkDeleteConfirm(){
+  const v=document.getElementById('delete-confirm-text').value;
+  document.getElementById('delete-submit-btn').disabled = v!=='XOA TAI KHOAN';
+}
+function submitDelete(){
+  const pwd=document.getElementById('delete-pwd').value;
+  const err=document.getElementById('delete-error');
+  if(!pwd){ err.style.display='block'; err.textContent='Vui lòng nhập mật khẩu để xác nhận.'; return; }
+  alert('⚠️ [Demo] Trong thực tế: tài khoản sẽ bị xóa vĩnh viễn sau khi xác nhận. Chuyển về trang chủ.');
+  window.location.href='index.html';
+}
+function linkGoogle(){ alert('[Demo] Chuyển đến Google OAuth để liên kết tài khoản Google.'); }
+function previewAvatar(input){
+  const reader=new FileReader();
+  reader.onload=e=>{ document.getElementById('avatar-preview').style.backgroundImage=`url(${e.target.result})`; document.getElementById('avatar-preview').textContent=''; document.getElementById('avatar-preview').style.backgroundSize='cover'; };
+  reader.readAsDataURL(input.files[0]);
+}
+function removeAvatar(){ document.getElementById('avatar-preview').style.backgroundImage=''; document.getElementById('avatar-preview').textContent='TA'; }
+</script>
+</body>
+</html>

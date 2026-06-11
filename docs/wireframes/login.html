@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Đăng Nhập — EduVietPro</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body style="background:#f6f6f6">
+<div id="nav-placeholder"></div>
+<div style="min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;padding:32px 16px">
+  <div style="width:100%;max-width:420px">
+    <div style="text-align:center;margin-bottom:28px">
+      <a href="index.html" style="font-size:24px;font-weight:900;display:block;margin-bottom:8px">EduViet<span style="font-weight:400">Pro</span></a>
+      <h1 style="font-size:22px;font-weight:800">Đăng nhập tài khoản</h1>
+      <p class="text-sm text-gray mt-8">Chưa có tài khoản? <a href="register.html" style="font-weight:700;color:#000;text-decoration:underline">Đăng ký miễn phí</a></p>
+    </div>
+
+    <div class="card-dark">
+      <!-- GOOGLE -->
+      <button onclick="loginGoogle()" style="width:100%;padding:11px;border:1.5px solid #000;border-radius:8px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px">
+        <span style="font-size:18px">G</span> Tiếp tục với Google
+      </button>
+
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="flex:1;height:1px;background:#ddd"></div>
+        <span class="text-xs text-gray">hoặc đăng nhập bằng email</span>
+        <div style="flex:1;height:1px;background:#ddd"></div>
+      </div>
+
+      <form onsubmit="doLogin(event)">
+        <div class="form-group">
+          <label>Email</label>
+          <input class="form-control" type="email" placeholder="email@gmail.com" id="email" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <label style="margin-bottom:0">Mật khẩu</label>
+            <a href="forgot-password.html" class="text-xs" style="color:#666;text-decoration:underline">Quên mật khẩu?</a>
+          </div>
+          <div style="position:relative">
+            <input class="form-control" type="password" placeholder="••••••••" id="password" required autocomplete="current-password" style="padding-right:44px">
+            <button type="button" onclick="togglePwd('password')" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:#888;font-size:14px">👁</button>
+          </div>
+        </div>
+        <div id="login-error" style="display:none;padding:10px 14px;border:1.5px solid #c00;border-radius:6px;font-size:13px;color:#c00;margin-bottom:14px;background:#fff8f8"></div>
+        <button type="submit" class="btn-primary w-full" style="padding:12px;font-size:15px">Đăng Nhập</button>
+      </form>
+    </div>
+
+    <p class="text-xs text-gray text-center mt-16" style="line-height:1.7">Bằng cách đăng nhập, bạn đồng ý với <a href="#" style="color:#000;text-decoration:underline">Điều khoản sử dụng</a> và <a href="#" style="color:#000;text-decoration:underline">Chính sách bảo mật</a> của EduVietPro.</p>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', false);
+function togglePwd(id){
+  const f=document.getElementById(id);
+  f.type=f.type==='password'?'text':'password';
+}
+function loginGoogle(){ window.location.href='dashboard.html'; }
+function doLogin(e){
+  e.preventDefault();
+  const email=document.getElementById('email').value;
+  const pwd=document.getElementById('password').value;
+  const err=document.getElementById('login-error');
+  if(pwd.length < 6){
+    err.style.display='block';
+    err.textContent='Mật khẩu không đúng. Vui lòng thử lại hoặc đặt lại mật khẩu.';
+    return;
+  }
+  window.location.href='dashboard.html';
+}
+</script>
+</body>
+</html>

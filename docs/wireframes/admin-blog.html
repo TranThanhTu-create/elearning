@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản Lý Blog — EduVietPro Admin</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="admin-layout">
+
+  <div class="admin-nav">
+    <div class="admin-nav-group">Tổng quan</div>
+    <a href="admin-dashboard.html" class="admin-nav-item">📊 Dashboard</a>
+    <div class="admin-nav-group">Nội dung</div>
+    <a href="admin-courses.html" class="admin-nav-item">📚 Khóa học</a>
+    <a href="admin-blog.html" class="admin-nav-item active">✍️ Blog</a>
+    <div class="admin-nav-group">Kinh doanh</div>
+    <a href="admin-orders.html" class="admin-nav-item">🧾 Đơn hàng</a>
+    <a href="admin-users.html" class="admin-nav-item">👥 Học viên</a>
+    <a href="admin-affiliate.html" class="admin-nav-item">💰 Affiliate</a>
+    <a href="admin-coupons.html" class="admin-nav-item">🎫 Mã giảm giá</a>
+    <a href="admin-leads.html" class="admin-nav-item">📋 Leads</a>
+    <div class="admin-nav-group">Hệ thống</div>
+    <a href="admin-analytics.html" class="admin-nav-item">📈 Analytics</a>
+    <a href="admin-settings.html" class="admin-nav-item">⚙️ Cài đặt</a>
+    <div style="padding:20px 20px 8px;margin-top:auto">
+      <a href="index.html" class="admin-nav-item" style="border:1.5px solid #ddd;border-radius:6px;padding:8px 12px;font-size:13px">← Về trang chủ</a>
+    </div>
+  </div>
+
+  <div class="admin-content">
+
+    <!-- VIEW: LIST -->
+    <div id="view-list">
+      <div class="flex-between mb-24" style="flex-wrap:wrap;gap:12px">
+        <div>
+          <h1 style="font-size:22px;font-weight:900">Quản Lý Blog</h1>
+          <p class="text-sm text-gray mt-4">24 bài viết · 18 đã xuất bản · 6 nháp</p>
+        </div>
+        <button class="btn-primary" onclick="showView('view-edit-new')">+ Viết bài mới</button>
+      </div>
+
+      <!-- FILTER -->
+      <div class="flex gap-8 mb-16" style="flex-wrap:wrap">
+        <input class="form-control" style="max-width:280px" placeholder="Tìm tiêu đề, nội dung...">
+        <select class="filter-select"><option>Tất cả danh mục</option><option>Marketing Online</option><option>Kinh Doanh</option><option>Quay Video</option><option>TikTok</option><option>Facebook Ads</option></select>
+        <select class="filter-select"><option>Tất cả trạng thái</option><option>Đã xuất bản</option><option>Nháp</option></select>
+        <select class="filter-select"><option>Mới nhất</option><option>Cũ nhất</option><option>Xem nhiều nhất</option></select>
+      </div>
+
+      <!-- TABLE -->
+      <div class="card-dark" style="padding:0;overflow:hidden">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:40px"><input type="checkbox"></th>
+                <th>Tiêu đề</th>
+                <th>Danh mục</th>
+                <th>Lượt xem</th>
+                <th>Ngày đăng</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:54px;height:36px;background:#f0f0f0;border-radius:4px;flex-shrink:0"></div>
+                    <div>
+                      <div style="font-weight:600;font-size:13px;line-height:1.4">7 Bước Xây Dựng Kênh TikTok Triệu View Từ Đầu</div>
+                      <div class="text-xs text-gray">7-buoc-xay-dung-kenh-tiktok</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag">TikTok</span></td>
+                <td style="font-weight:700">12.847</td>
+                <td class="text-xs text-gray">28/05/2026</td>
+                <td><span class="tag tag-success">Xuất bản</span></td>
+                <td>
+                  <div class="flex gap-8">
+                    <button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button>
+                    <a href="blog-detail.html" target="_blank" class="btn-ghost btn-sm" style="text-decoration:none">Xem</a>
+                    <button class="btn-ghost btn-sm" style="color:#c00">Xóa</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:54px;height:36px;background:#f0f0f0;border-radius:4px;flex-shrink:0"></div>
+                    <div>
+                      <div style="font-weight:600;font-size:13px;line-height:1.4">Cách Chạy Facebook Ads Hiệu Quả Với Ngân Sách Nhỏ</div>
+                      <div class="text-xs text-gray">chay-facebook-ads-ngan-sach-nho</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag">Facebook Ads</span></td>
+                <td style="font-weight:700">9.234</td>
+                <td class="text-xs text-gray">25/05/2026</td>
+                <td><span class="tag tag-success">Xuất bản</span></td>
+                <td>
+                  <div class="flex gap-8">
+                    <button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button>
+                    <a href="#" class="btn-ghost btn-sm" style="text-decoration:none">Xem</a>
+                    <button class="btn-ghost btn-sm" style="color:#c00">Xóa</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:54px;height:36px;background:#f0f0f0;border-radius:4px;flex-shrink:0"></div>
+                    <div>
+                      <div style="font-weight:600;font-size:13px;line-height:1.4">Bí Quyết Quay Video Chuyên Nghiệp Bằng Điện Thoại</div>
+                      <div class="text-xs text-gray">quay-video-chuyen-nghiep-dien-thoai</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag">Quay Video</span></td>
+                <td style="font-weight:700">7.412</td>
+                <td class="text-xs text-gray">20/05/2026</td>
+                <td><span class="tag tag-success">Xuất bản</span></td>
+                <td>
+                  <div class="flex gap-8">
+                    <button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button>
+                    <a href="#" class="btn-ghost btn-sm" style="text-decoration:none">Xem</a>
+                    <button class="btn-ghost btn-sm" style="color:#c00">Xóa</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:54px;height:36px;background:#f0f0f0;border-radius:4px;flex-shrink:0"></div>
+                    <div>
+                      <div style="font-weight:600;font-size:13px;line-height:1.4">5 Lỗi Thường Gặp Khi Bắt Đầu Kinh Doanh Online</div>
+                      <div class="text-xs text-gray">loi-thuong-gap-kinh-doanh-online</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag">Kinh Doanh</span></td>
+                <td style="font-weight:700">5.891</td>
+                <td class="text-xs text-gray">15/05/2026</td>
+                <td><span class="tag tag-success">Xuất bản</span></td>
+                <td>
+                  <div class="flex gap-8">
+                    <button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button>
+                    <a href="#" class="btn-ghost btn-sm" style="text-decoration:none">Xem</a>
+                    <button class="btn-ghost btn-sm" style="color:#c00">Xóa</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:54px;height:36px;background:#f0f0f0;border-radius:4px;flex-shrink:0"></div>
+                    <div>
+                      <div style="font-weight:600;font-size:13px;line-height:1.4">Google Ads vs Facebook Ads: Nên Chọn Kênh Nào Năm 2026?</div>
+                      <div class="text-xs text-gray">google-ads-vs-facebook-ads-2026</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag">Marketing Online</span></td>
+                <td style="font-weight:700">4.203</td>
+                <td class="text-xs text-gray">10/05/2026</td>
+                <td><span class="tag tag-pending">Nháp</span></td>
+                <td>
+                  <div class="flex gap-8">
+                    <button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button>
+                    <button class="btn-ghost btn-sm" style="color:#c00">Xóa</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:54px;height:36px;background:#f0f0f0;border-radius:4px;flex-shrink:0"></div>
+                    <div>
+                      <div style="font-weight:600;font-size:13px;line-height:1.4">Affiliate Marketing Là Gì? Hướng Dẫn Bắt Đầu Từ Con Số 0</div>
+                      <div class="text-xs text-gray">affiliate-marketing-la-gi</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag">Kinh Doanh</span></td>
+                <td style="font-weight:700">3.667</td>
+                <td class="text-xs text-gray">05/05/2026</td>
+                <td><span class="tag tag-pending">Nháp</span></td>
+                <td>
+                  <div class="flex gap-8">
+                    <button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button>
+                    <button class="btn-ghost btn-sm" style="color:#c00">Xóa</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- PAGINATION -->
+        <div class="flex-between" style="padding:14px 20px;border-top:1px solid #e8e8e8">
+          <div class="text-xs text-gray">Hiển thị 6 / 24 bài viết</div>
+          <div class="flex gap-4">
+            <button class="btn-ghost btn-sm">←</button>
+            <button class="btn-primary btn-sm">1</button>
+            <button class="btn-ghost btn-sm">2</button>
+            <button class="btn-ghost btn-sm">3</button>
+            <button class="btn-ghost btn-sm">4</button>
+            <button class="btn-ghost btn-sm">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: EDITOR (NEW/EDIT) -->
+    <div id="view-edit" style="display:none">
+      <div class="flex-between mb-24" style="flex-wrap:wrap;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="btn-ghost btn-sm" onclick="showView('view-list')">← Quay lại</button>
+          <h1 style="font-size:20px;font-weight:900">Chỉnh sửa bài viết</h1>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn-ghost">Lưu nháp</button>
+          <button class="btn-primary">Xuất bản</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start">
+        <!-- EDITOR AREA -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card-dark">
+            <div class="form-group" style="margin-bottom:14px">
+              <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888">Tiêu đề bài viết</label>
+              <input class="form-control" style="font-size:20px;font-weight:700;border:none;border-bottom:2px solid #000;border-radius:0;padding:8px 0" value="7 Bước Xây Dựng Kênh TikTok Triệu View Từ Đầu">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888">Slug URL</label>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="text-xs text-gray">eduvietpro.vn/blog/</span>
+                <input class="form-control" style="flex:1" value="7-buoc-xay-dung-kenh-tiktok">
+              </div>
+            </div>
+          </div>
+
+          <!-- TIPTAP EDITOR -->
+          <div class="card-dark" style="padding:0;overflow:hidden">
+            <!-- Toolbar -->
+            <div style="display:flex;flex-wrap:wrap;gap:2px;padding:10px 12px;border-bottom:1px solid #e8e8e8;background:#fafafa">
+              <button class="btn-ghost btn-sm" style="font-weight:900;min-width:30px">B</button>
+              <button class="btn-ghost btn-sm" style="font-style:italic;min-width:30px">I</button>
+              <button class="btn-ghost btn-sm" style="text-decoration:underline;min-width:30px">U</button>
+              <button class="btn-ghost btn-sm" style="text-decoration:line-through;min-width:30px">S</button>
+              <div style="width:1px;background:#ddd;margin:0 4px"></div>
+              <button class="btn-ghost btn-sm" style="font-size:11px">H1</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">H2</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">H3</button>
+              <div style="width:1px;background:#ddd;margin:0 4px"></div>
+              <button class="btn-ghost btn-sm" style="font-size:11px">≡ List</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">1. List</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">❝ Quote</button>
+              <div style="width:1px;background:#ddd;margin:0 4px"></div>
+              <button class="btn-ghost btn-sm" style="font-size:11px">🔗 Link</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">📷 Ảnh</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">▶ Video</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">── Divider</button>
+              <div style="width:1px;background:#ddd;margin:0 4px"></div>
+              <button class="btn-ghost btn-sm" style="font-size:11px">↩ Undo</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">↪ Redo</button>
+            </div>
+            <!-- Content area -->
+            <div style="padding:20px 24px;min-height:400px;outline:none;font-size:15px;line-height:1.8" contenteditable="true">
+              <h2 style="font-size:20px;font-weight:800;margin-bottom:12px">TikTok là gì và tại sao nên bắt đầu ngay bây giờ?</h2>
+              <p style="margin-bottom:14px">TikTok hiện là nền tảng mạng xã hội có tốc độ tăng trưởng nhanh nhất thế giới với hơn <strong>1,5 tỷ người dùng hoạt động</strong> mỗi tháng. Tại Việt Nam, TikTok đã vượt qua Facebook để trở thành ứng dụng được sử dụng nhiều nhất trong nhóm người dùng 18–35 tuổi.</p>
+              <blockquote style="border-left:4px solid #000;padding:12px 16px;background:#f8f8f8;margin:16px 0;font-style:italic">Nếu bạn chưa có mặt trên TikTok, bạn đang bỏ lỡ hàng triệu khách hàng tiềm năng mỗi ngày.</blockquote>
+              <h2 style="font-size:20px;font-weight:800;margin:20px 0 12px">Bước 1: Xác định niche và đối tượng mục tiêu</h2>
+              <p style="margin-bottom:14px">Trước khi tạo bất kỳ video nào, bạn cần trả lời 3 câu hỏi cốt lõi: <em>Bạn tạo content cho ai? Họ cần gì? Bạn có thể cung cấp gì?</em></p>
+            </div>
+          </div>
+
+          <!-- SEO META -->
+          <div class="card-dark">
+            <div style="font-weight:700;margin-bottom:14px">SEO & Meta</div>
+            <div class="form-group">
+              <label>Meta title</label>
+              <input class="form-control" value="7 Bước Xây Dựng Kênh TikTok Triệu View | EduVietPro">
+              <div class="form-hint" id="seo-title-count">61/60 ký tự — nên rút ngắn</div>
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label>Meta description</label>
+              <textarea class="form-control" rows="2">Hướng dẫn chi tiết 7 bước xây dựng kênh TikTok từ 0 đến 1 triệu view. Phù hợp người mới bắt đầu, không cần kinh nghiệm.</textarea>
+              <div class="form-hint">148/160 ký tự</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <!-- STATUS -->
+          <div class="card-dark">
+            <div style="font-weight:700;margin-bottom:14px">Trạng thái</div>
+            <div class="form-group">
+              <label>Trạng thái xuất bản</label>
+              <select class="form-control">
+                <option selected>Đã xuất bản</option>
+                <option>Nháp</option>
+                <option>Lên lịch</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label>Ngày xuất bản</label>
+              <input class="form-control" type="datetime-local" value="2026-05-28T08:00">
+            </div>
+          </div>
+
+          <!-- CATEGORY & TAGS -->
+          <div class="card-dark">
+            <div style="font-weight:700;margin-bottom:14px">Phân loại</div>
+            <div class="form-group">
+              <label>Danh mục</label>
+              <select class="form-control">
+                <option>TikTok</option>
+                <option>Facebook Ads</option>
+                <option>Marketing Online</option>
+                <option>Kinh Doanh</option>
+                <option>Quay Video</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label>Tags (nhấn Enter để thêm)</label>
+              <input class="form-control" placeholder="tiktok, video marketing...">
+              <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px">
+                <span class="tag" style="display:flex;align-items:center;gap:4px">TikTok <button style="border:none;background:none;cursor:pointer;font-size:11px;padding:0">×</button></span>
+                <span class="tag" style="display:flex;align-items:center;gap:4px">Video Marketing <button style="border:none;background:none;cursor:pointer;font-size:11px;padding:0">×</button></span>
+                <span class="tag" style="display:flex;align-items:center;gap:4px">Kiếm tiền online <button style="border:none;background:none;cursor:pointer;font-size:11px;padding:0">×</button></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- THUMBNAIL -->
+          <div class="card-dark">
+            <div style="font-weight:700;margin-bottom:14px">Ảnh thumbnail</div>
+            <div style="border:2px dashed #ddd;border-radius:8px;padding:16px;text-align:center;background:#fafafa;cursor:pointer">
+              <div style="width:100%;height:120px;background:#e8e8e8;border-radius:6px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#888">Ảnh hiện tại</div>
+              <div class="text-xs text-gray">Nhấn để thay đổi · PNG, JPG · Tối đa 2MB</div>
+            </div>
+          </div>
+
+          <!-- RELATED COURSE -->
+          <div class="card-dark">
+            <div style="font-weight:700;margin-bottom:14px">Khóa học liên quan</div>
+            <select class="form-control">
+              <option>TikTok Marketing — Bán Hàng Viral</option>
+              <option>Quay Video Chuyên Nghiệp</option>
+              <option>Facebook & Instagram Ads</option>
+              <option>Marketing Online A–Z</option>
+            </select>
+            <div class="form-hint mt-8">Hiển thị CTA mua khóa học ở cuối bài</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: EDITOR NEW (alias) -->
+    <div id="view-edit-new" style="display:none">
+      <div class="flex-between mb-24" style="flex-wrap:wrap;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="btn-ghost btn-sm" onclick="showView('view-list')">← Quay lại</button>
+          <h1 style="font-size:20px;font-weight:900">Viết bài mới</h1>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn-ghost">Lưu nháp</button>
+          <button class="btn-primary">Xuất bản</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card-dark">
+            <div class="form-group" style="margin-bottom:14px">
+              <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888">Tiêu đề bài viết</label>
+              <input class="form-control" style="font-size:20px;font-weight:700;border:none;border-bottom:2px solid #000;border-radius:0;padding:8px 0" placeholder="Nhập tiêu đề bài viết...">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888">Slug URL</label>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="text-xs text-gray">eduvietpro.vn/blog/</span>
+                <input class="form-control" style="flex:1" placeholder="tu-dong-tao-tu-tieu-de">
+              </div>
+            </div>
+          </div>
+          <div class="card-dark" style="padding:0;overflow:hidden">
+            <div style="display:flex;flex-wrap:wrap;gap:2px;padding:10px 12px;border-bottom:1px solid #e8e8e8;background:#fafafa">
+              <button class="btn-ghost btn-sm" style="font-weight:900;min-width:30px">B</button>
+              <button class="btn-ghost btn-sm" style="font-style:italic;min-width:30px">I</button>
+              <button class="btn-ghost btn-sm" style="text-decoration:underline;min-width:30px">U</button>
+              <div style="width:1px;background:#ddd;margin:0 4px"></div>
+              <button class="btn-ghost btn-sm" style="font-size:11px">H1</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">H2</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">H3</button>
+              <div style="width:1px;background:#ddd;margin:0 4px"></div>
+              <button class="btn-ghost btn-sm" style="font-size:11px">≡ List</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">❝ Quote</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">🔗 Link</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">📷 Ảnh</button>
+              <button class="btn-ghost btn-sm" style="font-size:11px">▶ Video</button>
+            </div>
+            <div style="padding:20px 24px;min-height:400px;outline:none;font-size:15px;line-height:1.8;color:#aaa" contenteditable="true">Bắt đầu viết nội dung bài...</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card-dark">
+            <div style="font-weight:700;margin-bottom:14px">Trạng thái</div>
+            <select class="form-control"><option>Nháp</option><option>Xuất bản ngay</option><option>Lên lịch</option></select>
+          </div>
+          <div class="card-dark">
+            <div style="font-weight:700;margin-bottom:14px">Phân loại</div>
+            <div class="form-group"><label>Danh mục</label><select class="form-control"><option value="">-- Chọn danh mục --</option><option>TikTok</option><option>Facebook Ads</option><option>Marketing Online</option><option>Kinh Doanh</option><option>Quay Video</option></select></div>
+            <div class="form-group" style="margin-bottom:0"><label>Tags</label><input class="form-control" placeholder="Nhập tag, nhấn Enter..."></div>
+          </div>
+          <div class="card-dark">
+            <div style="font-weight:700;margin-bottom:14px">Ảnh thumbnail</div>
+            <div style="border:2px dashed #ddd;border-radius:8px;padding:24px;text-align:center;cursor:pointer">
+              <div style="font-size:24px;margin-bottom:6px">📷</div>
+              <div class="text-xs text-gray">Kéo thả hoặc nhấn để tải lên</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', true);
+function showView(id) {
+  ['view-list','view-edit','view-edit-new'].forEach(v => {
+    document.getElementById(v).style.display = v === id ? 'block' : 'none';
+  });
+}
+</script>
+</body>
+</html>

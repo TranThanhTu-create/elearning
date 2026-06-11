@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản Lý Leads — EduVietPro Admin</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="admin-layout">
+
+  <div class="admin-nav">
+    <div class="admin-nav-group">Tổng quan</div>
+    <a href="admin-dashboard.html" class="admin-nav-item">📊 Dashboard</a>
+    <div class="admin-nav-group">Nội dung</div>
+    <a href="admin-courses.html" class="admin-nav-item">📚 Khóa học</a>
+    <a href="admin-blog.html" class="admin-nav-item">✍️ Blog</a>
+    <div class="admin-nav-group">Kinh doanh</div>
+    <a href="admin-orders.html" class="admin-nav-item">🧾 Đơn hàng</a>
+    <a href="admin-users.html" class="admin-nav-item">👥 Học viên</a>
+    <a href="admin-affiliate.html" class="admin-nav-item">💰 Affiliate</a>
+    <a href="admin-coupons.html" class="admin-nav-item">🎫 Mã giảm giá</a>
+    <a href="admin-leads.html" class="admin-nav-item active">📋 Leads</a>
+    <div class="admin-nav-group">Hệ thống</div>
+    <a href="admin-analytics.html" class="admin-nav-item">📈 Analytics</a>
+    <a href="admin-settings.html" class="admin-nav-item">⚙️ Cài đặt</a>
+    <div style="padding:20px 20px 8px;margin-top:auto">
+      <a href="index.html" class="admin-nav-item" style="border:1.5px solid #ddd;border-radius:6px;padding:8px 12px;font-size:13px">← Về trang chủ</a>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <div class="flex-between mb-20" style="flex-wrap:wrap;gap:12px">
+      <div>
+        <h1 style="font-size:22px;font-weight:900">Quản Lý Leads</h1>
+        <p class="text-sm text-gray mt-4">312 leads tháng này · Đồng bộ Google Sheets tự động</p>
+      </div>
+      <div class="flex gap-8">
+        <button class="btn-ghost" onclick="syncSheets()">🔄 Đồng bộ Google Sheets</button>
+        <button class="btn-ghost">⬇ Xuất CSV</button>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px">
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Tổng leads</div>
+        <div style="font-size:20px;font-weight:900">2.847</div>
+        <div class="text-xs text-gray">Từ trước đến nay</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Tháng này</div>
+        <div style="font-size:20px;font-weight:900;color:#27ae60">312</div>
+        <div class="text-xs" style="color:#27ae60">↑ 67 so với T4</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Từ Facebook</div>
+        <div style="font-size:20px;font-weight:900">134</div>
+        <div class="text-xs text-gray">42.9%</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Từ TikTok</div>
+        <div style="font-size:20px;font-weight:900">78</div>
+        <div class="text-xs text-gray">25%</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Chuyển đổi mua</div>
+        <div style="font-size:20px;font-weight:900">47</div>
+        <div class="text-xs text-gray">15.1% rate</div>
+      </div>
+    </div>
+
+    <!-- SOURCE BREAKDOWN -->
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;margin-bottom:20px">
+      <div class="card-dark">
+        <div style="font-weight:700;margin-bottom:14px">Leads theo nguồn — Tháng 5/2026</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div>
+            <div class="flex-between text-sm mb-4"><span style="font-weight:600">Facebook Ads</span><span style="font-weight:700">134 leads (42.9%)</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between text-sm mb-4"><span style="font-weight:600">TikTok</span><span style="font-weight:700">78 leads (25%)</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:58%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between text-sm mb-4"><span style="font-weight:600">Organic (Blog/SEO)</span><span style="font-weight:700">54 leads (17.3%)</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between text-sm mb-4"><span style="font-weight:600">Zalo</span><span style="font-weight:700">31 leads (9.9%)</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:23%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between text-sm mb-4"><span style="font-weight:600">Khác</span><span style="font-weight:700">15 leads (4.9%)</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:11%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-dark">
+        <div style="font-weight:700;margin-bottom:14px">Google Sheets</div>
+        <div style="padding:12px;border:1.5px solid #e8e8e8;border-radius:8px;background:#f8f8f8;margin-bottom:12px">
+          <div class="text-xs text-gray mb-4">Sheet ID kết nối</div>
+          <div style="font-family:monospace;font-size:11px;word-break:break-all;color:#333">1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <div style="width:8px;height:8px;border-radius:50%;background:#27ae60;flex-shrink:0"></div>
+          <span class="text-xs">Đồng bộ lần cuối: 14:35 · 29/05/2026</span>
+        </div>
+        <div class="text-xs text-gray mb-12">Cột: Thời gian · Họ tên · Email · SĐT · URL · UTM Source · UTM Medium · UTM Campaign</div>
+        <a href="#" class="btn-ghost btn-sm w-full" style="text-align:center;text-decoration:none;display:block">Mở Google Sheets ↗</a>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="flex gap-8 mb-16" style="flex-wrap:wrap">
+      <input class="form-control" style="max-width:260px" placeholder="Tên, email, số điện thoại...">
+      <select class="filter-select">
+        <option>Tất cả nguồn</option>
+        <option>Facebook</option>
+        <option>TikTok</option>
+        <option>Organic</option>
+        <option>Zalo</option>
+        <option>Blog</option>
+      </select>
+      <select class="filter-select">
+        <option>Tháng này</option>
+        <option>Tuần này</option>
+        <option>Hôm nay</option>
+        <option>Tháng trước</option>
+        <option>Tùy chỉnh</option>
+      </select>
+      <select class="filter-select">
+        <option>Tất cả</option>
+        <option>Đã mua khóa học</option>
+        <option>Chưa mua</option>
+      </select>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card-dark" style="padding:0;overflow:hidden">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40px"><input type="checkbox"></th>
+              <th>Họ tên</th>
+              <th>Email</th>
+              <th>Số điện thoại</th>
+              <th>Nguồn</th>
+              <th>UTM Campaign</th>
+              <th>Trang đăng ký</th>
+              <th>Thời gian</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:700;font-size:13px">Ngô Thị Hoa</td>
+              <td class="text-xs">ngothihoa@gmail.com</td>
+              <td class="text-xs" style="font-weight:600">0932 111 222</td>
+              <td><span class="tag" style="font-size:10px">Facebook</span></td>
+              <td class="text-xs text-gray">webinar_may26</td>
+              <td class="text-xs text-gray">/courses</td>
+              <td class="text-xs text-gray">14:22 · 29/05</td>
+              <td><span class="tag" style="font-size:10px;background:#fff3e0;color:#e67e22;border-color:#ffcc80">Chưa mua</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:700;font-size:13px">Bùi Minh Tuấn</td>
+              <td class="text-xs">bmt2026@gmail.com</td>
+              <td class="text-xs" style="font-weight:600">0901 333 444</td>
+              <td><span class="tag" style="font-size:10px">Organic</span></td>
+              <td class="text-xs text-gray">—</td>
+              <td class="text-xs text-gray">/blog/7-buoc-tiktok</td>
+              <td class="text-xs text-gray">13:55 · 29/05</td>
+              <td><span class="tag tag-success" style="font-size:10px">Đã mua</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:700;font-size:13px">Vũ Thị Lan</td>
+              <td class="text-xs">vuthilan99@gmail.com</td>
+              <td class="text-xs" style="font-weight:600">0976 555 666</td>
+              <td><span class="tag" style="font-size:10px">TikTok</span></td>
+              <td class="text-xs text-gray">tiktok_course_promo</td>
+              <td class="text-xs text-gray">/</td>
+              <td class="text-xs text-gray">12:30 · 29/05</td>
+              <td><span class="tag" style="font-size:10px;background:#fff3e0;color:#e67e22;border-color:#ffcc80">Chưa mua</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:700;font-size:13px">Đặng Văn Nam</td>
+              <td class="text-xs">dangnam@gmail.com</td>
+              <td class="text-xs" style="font-weight:600">0912 777 888</td>
+              <td><span class="tag" style="font-size:10px">Zalo</span></td>
+              <td class="text-xs text-gray">zalo_oa_broadcast</td>
+              <td class="text-xs text-gray">/courses/marketing</td>
+              <td class="text-xs text-gray">10:14 · 29/05</td>
+              <td><span class="tag" style="font-size:10px;background:#fff3e0;color:#e67e22;border-color:#ffcc80">Chưa mua</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:700;font-size:13px">Cao Thị Linh</td>
+              <td class="text-xs">caolinh@gmail.com</td>
+              <td class="text-xs" style="font-weight:600">0966 999 000</td>
+              <td><span class="tag" style="font-size:10px">Blog</span></td>
+              <td class="text-xs text-gray">seo_organic</td>
+              <td class="text-xs text-gray">/blog/facebook-ads</td>
+              <td class="text-xs text-gray">09:02 · 29/05</td>
+              <td><span class="tag tag-success" style="font-size:10px">Đã mua</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:700;font-size:13px">Hoàng Minh Tú</td>
+              <td class="text-xs">minhtu@gmail.com</td>
+              <td class="text-xs" style="font-weight:600">0945 123 456</td>
+              <td><span class="tag" style="font-size:10px">Facebook</span></td>
+              <td class="text-xs text-gray">fb_retarget_may</td>
+              <td class="text-xs text-gray">/courses/video</td>
+              <td class="text-xs text-gray">08:45 · 29/05</td>
+              <td><span class="tag" style="font-size:10px;background:#fff3e0;color:#e67e22;border-color:#ffcc80">Chưa mua</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:700;font-size:13px">Trịnh Hải Yến</td>
+              <td class="text-xs">haiyen@gmail.com</td>
+              <td class="text-xs" style="font-weight:600">0988 234 567</td>
+              <td><span class="tag" style="font-size:10px">TikTok</span></td>
+              <td class="text-xs text-gray">tiktok_kinh_doanh</td>
+              <td class="text-xs text-gray">/</td>
+              <td class="text-xs text-gray">22:17 · 28/05</td>
+              <td><span class="tag" style="font-size:10px;background:#fff3e0;color:#e67e22;border-color:#ffcc80">Chưa mua</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex-between" style="padding:14px 20px;border-top:1px solid #e8e8e8">
+        <div class="text-xs text-gray">Hiển thị 7 / 312 leads tháng này</div>
+        <div class="flex gap-4">
+          <button class="btn-ghost btn-sm">←</button>
+          <button class="btn-primary btn-sm">1</button>
+          <button class="btn-ghost btn-sm">2</button>
+          <button class="btn-ghost btn-sm">3</button>
+          <button class="btn-ghost btn-sm">…</button>
+          <button class="btn-ghost btn-sm">45</button>
+          <button class="btn-ghost btn-sm">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="sync-toast" style="display:none;position:fixed;bottom:24px;right:24px;background:#000;color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;font-weight:600;z-index:999">✓ Đã đồng bộ 312 leads lên Google Sheets</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', true);
+function syncSheets(){
+  const t=document.getElementById('sync-toast');
+  t.style.display='block';
+  setTimeout(()=>t.style.display='none',3000);
+}
+</script>
+</body>
+</html>

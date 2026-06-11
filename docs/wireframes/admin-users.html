@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản Lý Học Viên — EduVietPro Admin</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="admin-layout">
+
+  <div class="admin-nav">
+    <div class="admin-nav-group">Tổng quan</div>
+    <a href="admin-dashboard.html" class="admin-nav-item">📊 Dashboard</a>
+    <div class="admin-nav-group">Nội dung</div>
+    <a href="admin-courses.html" class="admin-nav-item">📚 Khóa học</a>
+    <a href="admin-blog.html" class="admin-nav-item">✍️ Blog</a>
+    <div class="admin-nav-group">Kinh doanh</div>
+    <a href="admin-orders.html" class="admin-nav-item">🧾 Đơn hàng</a>
+    <a href="admin-users.html" class="admin-nav-item active">👥 Học viên</a>
+    <a href="admin-affiliate.html" class="admin-nav-item">💰 Affiliate</a>
+    <a href="admin-coupons.html" class="admin-nav-item">🎫 Mã giảm giá</a>
+    <a href="admin-leads.html" class="admin-nav-item">📋 Leads</a>
+    <div class="admin-nav-group">Hệ thống</div>
+    <a href="admin-analytics.html" class="admin-nav-item">📈 Analytics</a>
+    <a href="admin-settings.html" class="admin-nav-item">⚙️ Cài đặt</a>
+    <div style="padding:20px 20px 8px;margin-top:auto">
+      <a href="index.html" class="admin-nav-item" style="border:1.5px solid #ddd;border-radius:6px;padding:8px 12px;font-size:13px">← Về trang chủ</a>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <div class="flex-between mb-20" style="flex-wrap:wrap;gap:12px">
+      <div>
+        <h1 style="font-size:22px;font-weight:900">Quản Lý Học Viên</h1>
+        <p class="text-sm text-gray mt-4">1.247 học viên · 47 mới tháng này</p>
+      </div>
+      <div class="flex gap-8">
+        <button class="btn-ghost">⬇ Xuất Excel</button>
+        <button class="btn-primary" onclick="openAddUser()">+ Thêm thủ công</button>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Tổng học viên</div>
+        <div style="font-size:22px;font-weight:900">1.247</div>
+        <div class="text-xs" style="color:#27ae60">↑ 47 tháng này</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Đang học</div>
+        <div style="font-size:22px;font-weight:900">891</div>
+        <div class="text-xs text-gray">71.4% tổng số</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Hoàn thành ít nhất 1 khóa</div>
+        <div style="font-size:22px;font-weight:900">423</div>
+        <div class="text-xs text-gray">33.9% tổng số</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="text-xs text-gray mb-4">Đăng ký Google</div>
+        <div style="font-size:22px;font-weight:900">734</div>
+        <div class="text-xs text-gray">58.9% tổng số</div>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="flex gap-8 mb-16" style="flex-wrap:wrap">
+      <input class="form-control" style="max-width:280px" placeholder="Tên, email, số điện thoại...">
+      <select class="filter-select"><option>Tất cả khóa học</option><option>Quay Video Chuyên Nghiệp</option><option>Kinh Doanh Online Từ 0</option><option>Marketing Online A–Z</option><option>TikTok Marketing</option></select>
+      <select class="filter-select"><option>Tất cả trạng thái</option><option>Đang học</option><option>Hoàn thành</option><option>Chưa bắt đầu</option></select>
+      <select class="filter-select"><option>Mới nhất</option><option>Cũ nhất</option><option>Nhiều khóa nhất</option><option>Chi tiêu nhiều nhất</option></select>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card-dark" style="padding:0;overflow:hidden">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40px"><input type="checkbox"></th>
+              <th>Học viên</th>
+              <th>Đăng ký qua</th>
+              <th>Số khóa</th>
+              <th>Tổng chi tiêu</th>
+              <th>Tiến độ TB</th>
+              <th>Ngày tham gia</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:34px;height:34px;border-radius:50%;background:#e8e8e8;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">NT</div>
+                  <div>
+                    <div style="font-weight:700;font-size:13px">Nguyễn Tuấn Anh</div>
+                    <div class="text-xs text-gray">tuananh@gmail.com · 0901 234 567</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="tag" style="font-size:10px">Google</span></td>
+              <td style="font-weight:700;text-align:center">3</td>
+              <td style="font-weight:700">4.770.000 ₫</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="flex:1;height:6px;background:#e8e8e8;border-radius:3px;min-width:60px"><div style="height:100%;width:72%;background:#000;border-radius:3px"></div></div>
+                  <span class="text-xs">72%</span>
+                </div>
+              </td>
+              <td class="text-xs text-gray">12/01/2026</td>
+              <td><button class="btn-ghost btn-sm" onclick="openUserDetail()">Chi tiết</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:34px;height:34px;border-radius:50%;background:#e8e8e8;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">TM</div>
+                  <div>
+                    <div style="font-weight:700;font-size:13px">Trần Thị Mai</div>
+                    <div class="text-xs text-gray">mai.tran@gmail.com · 0912 345 678</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="tag" style="font-size:10px">Email</span></td>
+              <td style="font-weight:700;text-align:center">2</td>
+              <td style="font-weight:700">2.480.000 ₫</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="flex:1;height:6px;background:#e8e8e8;border-radius:3px;min-width:60px"><div style="height:100%;width:45%;background:#000;border-radius:3px"></div></div>
+                  <span class="text-xs">45%</span>
+                </div>
+              </td>
+              <td class="text-xs text-gray">08/02/2026</td>
+              <td><button class="btn-ghost btn-sm" onclick="openUserDetail()">Chi tiết</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:34px;height:34px;border-radius:50%;background:#e8e8e8;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">LH</div>
+                  <div>
+                    <div style="font-weight:700;font-size:13px">Lê Văn Hùng</div>
+                    <div class="text-xs text-gray">lehung@gmail.com · 0976 567 890</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="tag" style="font-size:10px">Google</span></td>
+              <td style="font-weight:700;text-align:center">1</td>
+              <td style="font-weight:700">1.290.000 ₫</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="flex:1;height:6px;background:#e8e8e8;border-radius:3px;min-width:60px"><div style="height:100%;width:19%;background:#000;border-radius:3px"></div></div>
+                  <span class="text-xs">19%</span>
+                </div>
+              </td>
+              <td class="text-xs text-gray">27/05/2026</td>
+              <td><button class="btn-ghost btn-sm" onclick="openUserDetail()">Chi tiết</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:34px;height:34px;border-radius:50%;background:#e8e8e8;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">PL</div>
+                  <div>
+                    <div style="font-weight:700;font-size:13px">Phạm Lan Anh</div>
+                    <div class="text-xs text-gray">lananh@gmail.com · 0932 456 789</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="tag" style="font-size:10px">Email</span></td>
+              <td style="font-weight:700;text-align:center">2</td>
+              <td style="font-weight:700">2.680.000 ₫</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="flex:1;height:6px;background:#e8e8e8;border-radius:3px;min-width:60px"><div style="height:100%;width:100%;background:#27ae60;border-radius:3px"></div></div>
+                  <span class="text-xs" style="color:#27ae60">100%</span>
+                </div>
+              </td>
+              <td class="text-xs text-gray">15/03/2026</td>
+              <td><button class="btn-ghost btn-sm" onclick="openUserDetail()">Chi tiết</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:34px;height:34px;border-radius:50%;background:#e8e8e8;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">HQ</div>
+                  <div>
+                    <div style="font-weight:700;font-size:13px">Hoàng Kim Quân</div>
+                    <div class="text-xs text-gray">kimquan@gmail.com · 0965 678 901</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="tag" style="font-size:10px">Google</span></td>
+              <td style="font-weight:700;text-align:center">4</td>
+              <td style="font-weight:700">6.760.000 ₫</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="flex:1;height:6px;background:#e8e8e8;border-radius:3px;min-width:60px"><div style="height:100%;width:58%;background:#000;border-radius:3px"></div></div>
+                  <span class="text-xs">58%</span>
+                </div>
+              </td>
+              <td class="text-xs text-gray">22/11/2025</td>
+              <td><button class="btn-ghost btn-sm" onclick="openUserDetail()">Chi tiết</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:34px;height:34px;border-radius:50%;background:#e8e8e8;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">VL</div>
+                  <div>
+                    <div style="font-weight:700;font-size:13px">Vũ Thị Lan</div>
+                    <div class="text-xs text-gray">vuthilan@gmail.com · 0912 789 012</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="tag" style="font-size:10px">Email</span></td>
+              <td style="font-weight:700;text-align:center">1</td>
+              <td style="font-weight:700">990.000 ₫</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="flex:1;height:6px;background:#e8e8e8;border-radius:3px;min-width:60px"><div style="height:100%;width:5%;background:#000;border-radius:3px"></div></div>
+                  <span class="text-xs">5%</span>
+                </div>
+              </td>
+              <td class="text-xs text-gray">29/05/2026</td>
+              <td><button class="btn-ghost btn-sm" onclick="openUserDetail()">Chi tiết</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex-between" style="padding:14px 20px;border-top:1px solid #e8e8e8">
+        <div class="text-xs text-gray">Hiển thị 6 / 1.247 học viên</div>
+        <div class="flex gap-4">
+          <button class="btn-ghost btn-sm">←</button>
+          <button class="btn-primary btn-sm">1</button>
+          <button class="btn-ghost btn-sm">2</button>
+          <button class="btn-ghost btn-sm">3</button>
+          <button class="btn-ghost btn-sm">…</button>
+          <button class="btn-ghost btn-sm">208</button>
+          <button class="btn-ghost btn-sm">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- USER DETAIL MODAL -->
+<div id="user-modal" class="popup-overlay" style="display:none" onclick="if(event.target===this)closeUserDetail()">
+  <div style="background:#fff;border-radius:12px;padding:28px;width:100%;max-width:560px;border:2px solid #000;max-height:90vh;overflow-y:auto">
+    <div class="flex-between mb-20">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:44px;height:44px;border-radius:50%;background:#e8e8e8;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">NT</div>
+        <div>
+          <div style="font-size:16px;font-weight:900">Nguyễn Tuấn Anh</div>
+          <div class="text-xs text-gray">Tham gia 12/01/2026 · Google OAuth</div>
+        </div>
+      </div>
+      <button onclick="closeUserDetail()" style="border:none;background:none;font-size:20px;cursor:pointer">×</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div class="card"><div class="text-xs text-gray mb-2">Email</div><div style="font-size:13px;font-weight:600">tuananh@gmail.com</div></div>
+      <div class="card"><div class="text-xs text-gray mb-2">Điện thoại</div><div style="font-size:13px;font-weight:600">0901 234 567</div></div>
+      <div class="card"><div class="text-xs text-gray mb-2">Số khóa đã mua</div><div style="font-size:18px;font-weight:900">3</div></div>
+      <div class="card"><div class="text-xs text-gray mb-2">Tổng chi tiêu</div><div style="font-size:18px;font-weight:900">4.770.000 ₫</div></div>
+    </div>
+
+    <div style="font-weight:700;margin-bottom:10px">Khóa học đã mua</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+      <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-weight:600;font-size:13px">Quay Video Chuyên Nghiệp</div>
+          <div class="text-xs text-gray">Mua 15/01/2026 · 1.490.000 ₫</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:13px;font-weight:700">72%</div>
+          <div class="text-xs text-gray">hoàn thành</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-weight:600;font-size:13px">TikTok Marketing</div>
+          <div class="text-xs text-gray">Mua 02/03/2026 · 1.290.000 ₫</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:13px;font-weight:700">88%</div>
+          <div class="text-xs text-gray">hoàn thành</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-weight:600;font-size:13px">Kinh Doanh Online Từ 0</div>
+          <div class="text-xs text-gray">Mua 29/05/2026 · 1.990.000 ₫</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:13px;font-weight:700">0%</div>
+          <div class="text-xs text-gray">chưa bắt đầu</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px">
+      <button onclick="closeUserDetail()" class="btn-ghost w-full">Đóng</button>
+      <button class="btn-ghost w-full" style="color:#c00">Khóa tài khoản</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD USER MODAL -->
+<div id="add-modal" class="popup-overlay" style="display:none" onclick="if(event.target===this)closeAddUser()">
+  <div style="background:#fff;border-radius:12px;padding:28px;width:100%;max-width:440px;border:2px solid #000">
+    <div class="flex-between mb-20">
+      <div style="font-size:16px;font-weight:900">Thêm học viên thủ công</div>
+      <button onclick="closeAddUser()" style="border:none;background:none;font-size:20px;cursor:pointer">×</button>
+    </div>
+    <div class="form-group"><label>Họ và tên *</label><input class="form-control" placeholder="Nguyễn Văn An"></div>
+    <div class="form-group"><label>Email *</label><input class="form-control" type="email" placeholder="email@gmail.com"></div>
+    <div class="form-group"><label>Số điện thoại</label><input class="form-control" type="tel" placeholder="0901 234 567"></div>
+    <div class="form-group"><label>Cấp quyền khóa học</label><select class="form-control"><option value="">-- Chọn khóa học --</option><option>Quay Video Chuyên Nghiệp</option><option>Kinh Doanh Online Từ 0</option><option>Marketing Online A–Z</option><option>TikTok Marketing</option></select></div>
+    <div class="form-group" style="margin-bottom:0"><div style="padding:10px;border:1.5px solid #e67e22;border-radius:6px;background:#fffbf0;font-size:12px;color:#e67e22">Học viên sẽ nhận email tạo mật khẩu. Không tính doanh thu cho đơn thủ công này.</div></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button onclick="closeAddUser()" class="btn-ghost w-full">Hủy</button>
+      <button class="btn-primary w-full">Thêm học viên</button>
+    </div>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', true);
+function openUserDetail(){ document.getElementById('user-modal').style.display='flex'; }
+function closeUserDetail(){ document.getElementById('user-modal').style.display='none'; }
+function openAddUser(){ document.getElementById('add-modal').style.display='flex'; }
+function closeAddUser(){ document.getElementById('add-modal').style.display='none'; }
+</script>
+</body>
+</html>

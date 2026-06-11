@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 — Không Tìm Thấy Trang — EduVietPro</title>
+<link rel="stylesheet" href="w.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="container" style="min-height:calc(100vh - 120px);display:flex;align-items:center;justify-content:center;padding:40px 16px">
+  <div style="text-align:center;max-width:520px;width:100%">
+
+    <!-- ERROR CODE -->
+    <div style="font-size:120px;font-weight:900;line-height:1;letter-spacing:-6px;margin-bottom:8px;position:relative;display:inline-block">
+      4
+      <span style="display:inline-block;width:90px;height:90px;border-radius:50%;border:6px solid #000;line-height:78px;font-size:80px;vertical-align:middle;margin:0 -8px">0</span>
+      4
+    </div>
+
+    <h1 style="font-size:24px;font-weight:900;margin-bottom:10px">Trang không tồn tại</h1>
+    <p class="text-gray" style="font-size:15px;line-height:1.7;margin-bottom:32px">
+      Trang bạn đang tìm kiếm đã bị xóa, đổi địa chỉ hoặc chưa từng tồn tại.<br>
+      Đừng lo — hãy thử một trong các lựa chọn bên dưới.
+    </p>
+
+    <!-- CTA BUTTONS -->
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto 36px">
+      <a href="index.html" class="btn-primary" style="padding:13px;font-size:15px">🏠 Về trang chủ</a>
+      <a href="courses.html" class="btn-ghost" style="padding:11px;font-size:14px">📚 Xem tất cả khóa học</a>
+      <a href="blog.html" style="font-size:13px;color:#666;text-decoration:underline;padding:8px">Đọc bài viết blog</a>
+    </div>
+
+    <!-- SEARCH BOX -->
+    <div class="card" style="padding:20px;text-align:left;margin-bottom:28px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:10px">🔍 Tìm kiếm nội dung</div>
+      <div style="display:flex;gap:8px">
+        <input class="form-control" type="text" id="search-input" placeholder="Tìm khóa học, bài viết..." style="flex:1" onkeydown="if(event.key==='Enter')doSearch()">
+        <button onclick="doSearch()" class="btn-primary" style="padding:9px 18px;white-space:nowrap">Tìm</button>
+      </div>
+    </div>
+
+    <!-- POPULAR LINKS -->
+    <div style="border-top:1.5px solid #e8e8e8;padding-top:24px">
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;margin-bottom:16px">Trang phổ biến</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+        <a href="courses.html" style="padding:7px 14px;border:1.5px solid #ddd;border-radius:20px;font-size:13px;text-decoration:none;color:#333;font-weight:600">📚 Khóa học</a>
+        <a href="course-detail.html" style="padding:7px 14px;border:1.5px solid #ddd;border-radius:20px;font-size:13px;text-decoration:none;color:#333;font-weight:600">🎬 Quay Video</a>
+        <a href="course-detail.html" style="padding:7px 14px;border:1.5px solid #ddd;border-radius:20px;font-size:13px;text-decoration:none;color:#333;font-weight:600">📱 TikTok Marketing</a>
+        <a href="blog.html" style="padding:7px 14px;border:1.5px solid #ddd;border-radius:20px;font-size:13px;text-decoration:none;color:#333;font-weight:600">✍️ Blog</a>
+        <a href="login.html" style="padding:7px 14px;border:1.5px solid #ddd;border-radius:20px;font-size:13px;text-decoration:none;color:#333;font-weight:600">👤 Đăng nhập</a>
+        <a href="dashboard.html" style="padding:7px 14px;border:1.5px solid #ddd;border-radius:20px;font-size:13px;text-decoration:none;color:#333;font-weight:600">🏆 Dashboard</a>
+      </div>
+    </div>
+
+    <!-- ERROR DETAIL (collapsible) -->
+    <div style="margin-top:28px">
+      <button onclick="toggleDetail()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#aaa;text-decoration:underline" id="detail-btn">Xem chi tiết lỗi</button>
+      <div id="error-detail" style="display:none;margin-top:12px;padding:12px 16px;background:#f6f6f6;border-radius:6px;text-align:left;font-family:monospace;font-size:12px;color:#666;line-height:1.8">
+        <div><strong>URL:</strong> /trang-khong-ton-tai</div>
+        <div><strong>Mã lỗi:</strong> 404 Not Found</div>
+        <div><strong>Thời gian:</strong> 14:35 — 29/05/2026</div>
+        <div><strong>Referer:</strong> https://google.com</div>
+        <div style="margin-top:8px;color:#aaa">Lỗi này đã được ghi lại tự động.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', false);
+function doSearch(){
+  const q=document.getElementById('search-input').value.trim();
+  if(q) window.location.href='courses.html?q='+encodeURIComponent(q);
+}
+function toggleDetail(){
+  const d=document.getElementById('error-detail');
+  const b=document.getElementById('detail-btn');
+  if(d.style.display==='none'){ d.style.display='block'; b.textContent='Ẩn chi tiết lỗi'; }
+  else { d.style.display='none'; b.textContent='Xem chi tiết lỗi'; }
+}
+</script>
+</body>
+</html>

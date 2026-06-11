@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản Lý Khóa Học — Admin</title>
+<link rel="stylesheet" href="w.css">
+<style>
+.lesson-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid #eee;border-radius:6px;margin-bottom:6px;background:#fff;font-size:13px}
+.lesson-row:hover{background:#f6f6f6}
+.drag-handle{color:#bbb;cursor:grab;font-size:16px;flex-shrink:0}
+.toggle{width:36px;height:20px;background:#ccc;border-radius:100px;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s}
+.toggle.on{background:#000}
+.toggle::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .2s}
+.toggle.on::after{left:18px}
+</style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="admin-layout">
+  <div class="admin-nav">
+    <div class="admin-nav-group">Tổng quan</div>
+    <a href="admin-dashboard.html" class="admin-nav-item">📊 Dashboard</a>
+    <div class="admin-nav-group">Nội dung</div>
+    <a href="admin-courses.html" class="admin-nav-item active">📚 Khóa học</a>
+    <a href="admin-blog.html" class="admin-nav-item">✍️ Blog</a>
+    <div class="admin-nav-group">Kinh doanh</div>
+    <a href="admin-orders.html" class="admin-nav-item">🧾 Đơn hàng</a>
+    <a href="admin-users.html" class="admin-nav-item">👥 Học viên</a>
+    <a href="admin-affiliate.html" class="admin-nav-item">💰 Affiliate</a>
+    <a href="admin-coupons.html" class="admin-nav-item">🎫 Mã giảm giá</a>
+    <a href="admin-leads.html" class="admin-nav-item">📋 Leads</a>
+    <div class="admin-nav-group">Hệ thống</div>
+    <a href="admin-analytics.html" class="admin-nav-item">📈 Analytics</a>
+    <a href="admin-settings.html" class="admin-nav-item">⚙️ Cài đặt</a>
+  </div>
+
+  <div class="admin-content">
+    <!-- VIEW: COURSE LIST (default) -->
+    <div id="view-list">
+      <div class="flex-between mb-20" style="flex-wrap:wrap;gap:12px">
+        <h1 style="font-size:22px;font-weight:900">Quản Lý Khóa Học</h1>
+        <button class="btn-primary" onclick="showView('view-edit')">+ Thêm khóa học mới</button>
+      </div>
+
+      <!-- STATS -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
+        <div class="card" style="text-align:center"><div class="text-xs text-gray mb-4">Tổng khóa học</div><div style="font-size:24px;font-weight:900">8</div></div>
+        <div class="card" style="text-align:center"><div class="text-xs text-gray mb-4">Đang hiển thị</div><div style="font-size:24px;font-weight:900">7</div></div>
+        <div class="card" style="text-align:center"><div class="text-xs text-gray mb-4">Tổng bài học</div><div style="font-size:24px;font-weight:900">348</div></div>
+        <div class="card" style="text-align:center"><div class="text-xs text-gray mb-4">Tổng học viên</div><div style="font-size:24px;font-weight:900">1.247</div></div>
+      </div>
+
+      <div class="table-wrap card-dark" style="padding:0">
+        <div style="padding:14px 16px;border-bottom:1.5px solid #000;display:flex;gap:10px;align-items:center">
+          <input class="form-control" type="text" placeholder="Tìm khóa học..." style="max-width:280px;font-size:13px">
+          <select class="filter-select" style="font-size:13px"><option>Tất cả trạng thái</option><option>Đang hiển thị</option><option>Ẩn</option></select>
+        </div>
+        <table>
+          <thead><tr><th>Khóa học</th><th>Giá</th><th>Học viên</th><th>Bài học</th><th>Doanh thu</th><th>Hiển thị</th><th>Thao tác</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:48px;height:34px;background:#e0e0e0;border:1px solid #ccc;border-radius:4px;flex-shrink:0"></div>
+                  <div><div style="font-weight:700;font-size:13px">Quay Video Chuyên Nghiệp Bằng Điện Thoại</div><div class="text-xs text-gray">48 bài · 12 giờ</div></div>
+                </div>
+              </td>
+              <td style="font-weight:700">1.490.000 ₫</td>
+              <td>432</td>
+              <td>48</td>
+              <td style="font-weight:700">42.160.000 ₫</td>
+              <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
+              <td>
+                <div class="flex gap-8">
+                  <button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button>
+                  <button class="btn-ghost btn-sm" onclick="showView('view-lessons')">Bài học</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:48px;height:34px;background:#e0e0e0;border:1px solid #ccc;border-radius:4px;flex-shrink:0"></div>
+                  <div><div style="font-weight:700;font-size:13px">Marketing Online Từ A–Z Cho Người Mới</div><div class="text-xs text-gray">72 bài · 18 giờ</div></div>
+                </div>
+              </td>
+              <td style="font-weight:700">990.000 ₫</td>
+              <td>287</td>
+              <td>72</td>
+              <td style="font-weight:700">17.820.000 ₫</td>
+              <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
+              <td><div class="flex gap-8"><button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button><button class="btn-ghost btn-sm" onclick="showView('view-lessons')">Bài học</button></div></td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:48px;height:34px;background:#e0e0e0;border:1px solid #ccc;border-radius:4px;flex-shrink:0"></div>
+                  <div><div style="font-weight:700;font-size:13px">TikTok Marketing — Xây Kênh Triệu View</div><div class="text-xs text-gray">36 bài · 9 giờ</div></div>
+                </div>
+              </td>
+              <td style="font-weight:700">1.290.000 ₫</td>
+              <td>198</td>
+              <td>36</td>
+              <td style="font-weight:700">15.480.000 ₫</td>
+              <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
+              <td><div class="flex gap-8"><button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button><button class="btn-ghost btn-sm" onclick="showView('view-lessons')">Bài học</button></div></td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:48px;height:34px;background:#e0e0e0;border:1px solid #ccc;border-radius:4px;flex-shrink:0"></div>
+                  <div><div style="font-weight:700;font-size:13px">Facebook Ads & Instagram Ads Thực Chiến</div><div class="text-xs text-gray">56 bài · 14 giờ</div></div>
+                </div>
+              </td>
+              <td style="font-weight:700">1.190.000 ₫</td>
+              <td>156</td>
+              <td>56</td>
+              <td style="font-weight:700">11.900.000 ₫</td>
+              <td><div class="toggle on" onclick="this.classList.toggle('on')"></div></td>
+              <td><div class="flex gap-8"><button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button><button class="btn-ghost btn-sm" onclick="showView('view-lessons')">Bài học</button></div></td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:48px;height:34px;background:#e0e0e0;border:1px solid #ccc;border-radius:4px;flex-shrink:0"></div>
+                  <div><div style="font-weight:700;font-size:13px">Kinh Doanh Online Từ 0</div><div class="text-xs text-gray">80 bài · 20 giờ</div></div>
+                </div>
+              </td>
+              <td style="font-weight:700">1.990.000 ₫</td>
+              <td>341</td>
+              <td>80</td>
+              <td style="font-weight:700">31.840.000 ₫</td>
+              <td><div class="toggle" onclick="this.classList.toggle('on')"></div></td>
+              <td><div class="flex gap-8"><button class="btn-ghost btn-sm" onclick="showView('view-edit')">Sửa</button><button class="btn-ghost btn-sm" onclick="showView('view-lessons')">Bài học</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW: EDIT COURSE -->
+    <div id="view-edit" style="display:none">
+      <div class="flex-between mb-20">
+        <h1 style="font-size:22px;font-weight:900">Chỉnh Sửa Khóa Học</h1>
+        <button class="btn-ghost btn-sm" onclick="showView('view-list')">← Quay lại danh sách</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start">
+        <div>
+          <div class="card-dark mb-16">
+            <div style="font-weight:700;margin-bottom:14px">Thông tin cơ bản</div>
+            <div class="form-group"><label>Tên khóa học *</label><input class="form-control" value="Quay Video Chuyên Nghiệp Bằng Điện Thoại"></div>
+            <div class="form-group"><label>Slug URL</label><input class="form-control" value="quay-video-chuyen-nghiep-bang-dien-thoai"><div class="form-hint">eduvietpro.vn/courses/quay-video-chuyen-nghiep-bang-dien-thoai</div></div>
+            <div class="form-group"><label>Mô tả ngắn (hiển thị trên card)</label><input class="form-control" value="Học quay video HD chỉ bằng điện thoại, từ cơ bản đến nâng cao"></div>
+            <div class="form-group"><label>Mô tả đầy đủ (landing page)</label><textarea class="form-control" rows="4">Khóa học toàn diện giúp bạn quay, dựng và xuất bản video chuyên nghiệp chỉ bằng chiếc điện thoại trong tay...</textarea></div>
+            <div class="form-row">
+              <div class="form-group"><label>Giá bán (₫)</label><input class="form-control" value="1490000" type="number"></div>
+              <div class="form-group"><label>Giá gốc (₫) — bỏ trống nếu không sale</label><input class="form-control" value="1990000" type="number"></div>
+            </div>
+          </div>
+
+          <div class="card-dark mb-16">
+            <div style="font-weight:700;margin-bottom:14px">Video & Media</div>
+            <div class="form-group"><label>YouTube Video ID — Trailer giới thiệu (public)</label><input class="form-control" value="dQw4w9WgXcQ" placeholder="VD: dQw4w9WgXcQ"><div class="form-hint">Lấy từ youtube.com/watch?v=<strong>ID_VIDEO</strong></div></div>
+            <div class="form-group"><label>Thumbnail khóa học</label>
+              <div style="border:2px dashed #ccc;border-radius:8px;padding:24px;text-align:center;background:#f6f6f6;cursor:pointer" onclick="alert('Chọn ảnh từ máy tính')">
+                <div style="font-size:28px;margin-bottom:8px">🖼</div>
+                <div style="font-size:13px;font-weight:600">Kéo thả ảnh vào đây hoặc click để chọn</div>
+                <div class="text-xs text-gray mt-4">JPG, PNG · Tối thiểu 800×450px</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-dark">
+            <div style="font-weight:700;margin-bottom:14px">SEO</div>
+            <div class="form-group"><label>Meta title</label><input class="form-control" value="Quay Video Chuyên Nghiệp Bằng Điện Thoại — EduVietPro"><div class="form-hint">57/60 ký tự</div></div>
+            <div class="form-group"><label>Meta description</label><textarea class="form-control" rows="2">Học cách quay video HD chuyên nghiệp chỉ bằng điện thoại. Khóa học thực hành 48 bài, 12 giờ video chất lượng cao.</textarea><div class="form-hint">148/160 ký tự</div></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card-dark mb-14">
+            <div style="font-weight:700;margin-bottom:12px">Trạng thái & Hiển thị</div>
+            <div class="form-group"><label>Trạng thái</label>
+              <select class="form-control"><option selected>Đang hiển thị</option><option>Ẩn (draft)</option></select>
+            </div>
+            <div class="form-group"><label>Badge</label>
+              <select class="form-control"><option selected>Bestseller</option><option>Mới</option><option>Sale</option><option>Không có</option></select>
+            </div>
+            <div class="form-group"><label>Danh mục</label>
+              <select class="form-control"><option selected>Video & Sản xuất</option><option>Marketing Online</option><option>Kinh doanh</option><option>TikTok & MXH</option></select>
+            </div>
+          </div>
+          <div class="card mb-14" style="background:#f6f6f6">
+            <div class="text-sm mb-8"><strong>Thống kê</strong></div>
+            <div class="flex-between text-sm mb-6"><span class="text-gray">Học viên</span><span style="font-weight:700">432</span></div>
+            <div class="flex-between text-sm mb-6"><span class="text-gray">Doanh thu</span><span style="font-weight:700">42.160.000 ₫</span></div>
+            <div class="flex-between text-sm"><span class="text-gray">Đánh giá</span><span style="font-weight:700">4.9★ (127)</span></div>
+          </div>
+          <div class="flex gap-8">
+            <button class="btn-primary w-full" style="padding:11px">Lưu thay đổi</button>
+            <button class="btn-ghost" style="padding:11px 14px" onclick="window.open('course-detail.html')">👁</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: LESSONS -->
+    <div id="view-lessons" style="display:none">
+      <div class="flex-between mb-20">
+        <h1 style="font-size:22px;font-weight:900">Quản Lý Bài Học</h1>
+        <div class="flex gap-8">
+          <button class="btn-ghost btn-sm" onclick="showView('view-list')">← Quay lại</button>
+          <button class="btn-primary btn-sm" onclick="showAddLesson()">+ Thêm bài học</button>
+        </div>
+      </div>
+      <div class="notice mb-16">📚 <strong>Quay Video Chuyên Nghiệp Bằng Điện Thoại</strong> — 48 bài · 7 chương · 12 giờ</div>
+
+      <!-- CHAPTER 1 -->
+      <div class="card-dark mb-12">
+        <div class="flex-between mb-12">
+          <div class="flex-center gap-8">
+            <span class="drag-handle">⠿</span>
+            <input style="font-size:15px;font-weight:800;border:none;background:transparent;width:360px" value="Chương 1: Tư Duy & Chuẩn Bị Thiết Bị">
+          </div>
+          <div class="flex gap-8">
+            <button class="btn-ghost btn-sm">+ Thêm bài</button>
+            <button class="btn-ghost btn-sm" style="color:#c00;border-color:#c00">Xóa</button>
+          </div>
+        </div>
+        <div>
+          <div class="lesson-row">
+            <span class="drag-handle">⠿</span>
+            <span style="color:#888;width:20px;font-size:12px">1</span>
+            <span style="flex:1;font-weight:600">Giới thiệu khóa học & chuẩn bị</span>
+            <input style="border:1px solid #ddd;border-radius:4px;padding:4px 8px;font-size:12px;width:140px" value="dQw4w9WgXcQ" placeholder="YouTube Video ID">
+            <span style="font-size:12px;color:#666;width:50px">12:30</span>
+            <div class="flex-center gap-6">
+              <span class="text-xs text-gray">Miễn phí</span>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <button style="border:none;background:none;color:#c00;cursor:pointer;font-size:16px">×</button>
+          </div>
+          <div class="lesson-row">
+            <span class="drag-handle">⠿</span>
+            <span style="color:#888;width:20px;font-size:12px">2</span>
+            <span style="flex:1;font-weight:600">Chọn điện thoại phù hợp để quay video</span>
+            <input style="border:1px solid #ddd;border-radius:4px;padding:4px 8px;font-size:12px;width:140px" value="abc123def456" placeholder="YouTube Video ID">
+            <span style="font-size:12px;color:#666;width:50px">18:45</span>
+            <div class="flex-center gap-6">
+              <span class="text-xs text-gray">Miễn phí</span>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <button style="border:none;background:none;color:#c00;cursor:pointer;font-size:16px">×</button>
+          </div>
+          <div class="lesson-row">
+            <span class="drag-handle">⠿</span>
+            <span style="color:#888;width:20px;font-size:12px">3</span>
+            <span style="flex:1;font-weight:600">Phụ kiện cần thiết: gimbal, mic, đèn</span>
+            <input style="border:1px solid #ddd;border-radius:4px;padding:4px 8px;font-size:12px;width:140px" value="xyz789ghi012" placeholder="YouTube Video ID">
+            <span style="font-size:12px;color:#666;width:50px">22:10</span>
+            <div class="flex-center gap-6">
+              <span class="text-xs text-gray">Có phí</span>
+              <div class="toggle" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <button style="border:none;background:none;color:#c00;cursor:pointer;font-size:16px">×</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 2 -->
+      <div class="card-dark mb-12">
+        <div class="flex-between mb-12">
+          <div class="flex-center gap-8">
+            <span class="drag-handle">⠿</span>
+            <input style="font-size:15px;font-weight:800;border:none;background:transparent;width:360px" value="Chương 2: Kỹ Thuật Quay Cơ Bản">
+          </div>
+          <div class="flex gap-8">
+            <button class="btn-ghost btn-sm">+ Thêm bài</button>
+            <button class="btn-ghost btn-sm" style="color:#c00;border-color:#c00">Xóa</button>
+          </div>
+        </div>
+        <div class="text-xs text-gray" style="padding:8px 12px">8 bài học · Kéo thả để sắp xếp</div>
+      </div>
+
+      <button class="btn-ghost w-full" style="padding:12px;border-style:dashed">+ Thêm chương mới</button>
+      <div class="flex gap-10 mt-16">
+        <button class="btn-primary" style="padding:11px 28px">Lưu tất cả thay đổi</button>
+        <button class="btn-ghost" style="padding:11px 20px" onclick="showView('view-list')">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+buildNav('', true);
+function showView(id){
+  ['view-list','view-edit','view-lessons'].forEach(v=> document.getElementById(v).style.display='none');
+  document.getElementById(id).style.display='block';
+}
+function showAddLesson(){ alert('Mở form thêm bài học mới'); }
+</script>
+</body>
+</html>
