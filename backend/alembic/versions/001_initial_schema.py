@@ -53,14 +53,13 @@ depends_on = None
 
 
 def _create_enum(bind, name: str, values: list) -> None:
-    sp = f"sp_enum_{name}"
-    bind.execute(text(f"SAVEPOINT {sp}"))
+    from sqlalchemy.exc import ProgrammingError
     try:
-        vals = ", ".join(f"'{v}'" for v in values)
-        bind.execute(text(f"CREATE TYPE {name} AS ENUM ({vals})"))
-        bind.execute(text(f"RELEASE SAVEPOINT {sp}"))
-    except Exception:
-        bind.execute(text(f"ROLLBACK TO SAVEPOINT {sp}"))
+        with bind.begin_nested():
+            vals = ", ".join(f"'{v}'" for v in values)
+            bind.execute(text(f"CREATE TYPE {name} AS ENUM ({vals})"))
+    except ProgrammingError:
+        pass  # type already exists
 
 
 def upgrade() -> None:
