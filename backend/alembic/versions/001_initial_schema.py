@@ -43,6 +43,7 @@ Bảng tạo theo thứ tự dependency (parent trước, child sau):
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy import text
 from sqlalchemy.dialects import postgresql
 
 revision = "001"
@@ -51,19 +52,30 @@ branch_labels = None
 depends_on = None
 
 
+def _create_enum(bind, name: str, values: list) -> None:
+    exists = bind.execute(
+        text("SELECT 1 FROM pg_type WHERE typname = :n"), {"n": name}
+    ).fetchone()
+    if not exists:
+        vals = ", ".join(f"'{v}'" for v in values)
+        bind.execute(text(f"CREATE TYPE {name} AS ENUM ({vals})"))
+
+
 def upgrade() -> None:
+    bind = op.get_bind()
+
     # ─── ENUMS ───────────────────────────────────────────────
-    op.execute("DO $$ BEGIN CREATE TYPE user_role AS ENUM ('admin', 'student'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE course_badge AS ENUM ('bestseller', 'new', 'sale', 'hot'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE course_level AS ENUM ('beginner', 'intermediate', 'advanced'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE order_status AS ENUM ('pending', 'completed', 'expired', 'cancelled', 'refunded'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE payment_method AS ENUM ('bank_transfer', 'qr'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE discount_type AS ENUM ('percent', 'fixed'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE post_status AS ENUM ('draft', 'published', 'archived'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE commission_status AS ENUM ('pending', 'approved', 'paid', 'cancelled'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE withdrawal_status AS ENUM ('pending', 'approved', 'rejected'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE page_type AS ENUM ('home', 'course_list', 'course_detail', 'blog', 'blog_detail', 'checkout'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
-    op.execute("DO $$ BEGIN CREATE TYPE checkout_outcome AS ENUM ('pending', 'completed', 'abandoned', 'expired'); EXCEPTION WHEN duplicate_object THEN null; END $$;")
+    _create_enum(bind, "user_role", ["admin", "student"])
+    _create_enum(bind, "course_badge", ["bestseller", "new", "sale", "hot"])
+    _create_enum(bind, "course_level", ["beginner", "intermediate", "advanced"])
+    _create_enum(bind, "order_status", ["pending", "completed", "expired", "cancelled", "refunded"])
+    _create_enum(bind, "payment_method", ["bank_transfer", "qr"])
+    _create_enum(bind, "discount_type", ["percent", "fixed"])
+    _create_enum(bind, "post_status", ["draft", "published", "archived"])
+    _create_enum(bind, "commission_status", ["pending", "approved", "paid", "cancelled"])
+    _create_enum(bind, "withdrawal_status", ["pending", "approved", "rejected"])
+    _create_enum(bind, "page_type", ["home", "course_list", "course_detail", "blog", "blog_detail", "checkout"])
+    _create_enum(bind, "checkout_outcome", ["pending", "completed", "abandoned", "expired"])
 
     # ─── 1. USERS ─────────────────────────────────────────────
     op.create_table(
