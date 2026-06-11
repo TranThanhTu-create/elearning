@@ -53,12 +53,14 @@ depends_on = None
 
 
 def _create_enum(bind, name: str, values: list) -> None:
-    exists = bind.execute(
-        text("SELECT 1 FROM pg_type WHERE typname = :n"), {"n": name}
-    ).fetchone()
-    if not exists:
+    sp = f"sp_enum_{name}"
+    bind.execute(text(f"SAVEPOINT {sp}"))
+    try:
         vals = ", ".join(f"'{v}'" for v in values)
         bind.execute(text(f"CREATE TYPE {name} AS ENUM ({vals})"))
+        bind.execute(text(f"RELEASE SAVEPOINT {sp}"))
+    except Exception:
+        bind.execute(text(f"ROLLBACK TO SAVEPOINT {sp}"))
 
 
 def upgrade() -> None:
