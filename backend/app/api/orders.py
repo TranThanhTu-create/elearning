@@ -16,7 +16,7 @@ from app.models.order import Order, Coupon, CouponUsage
 from app.models.course import Course, Enrollment
 from app.models.user import User
 from app.schemas.order import (
-    CreateOrderRequest, OrderSummary,
+    CreateOrderRequest, OrderSummary, BankTransferInfo,
     CouponCheckRequest, CouponCheckResponse,
     SePayWebhookPayload,
 )
@@ -258,29 +258,38 @@ async def _build_order_summary(order: Order, course: Course, db: AsyncSession) -
 
     logger.debug(f"   QR URL: {qr_url[:80] + '...' if qr_url and len(qr_url) > 80 else qr_url}")
 
+    bank_transfer_info = BankTransferInfo(
+        bank_name=settings.BANK_NAME,
+        account_number=settings.BANK_ACCOUNT_NUMBER,
+        account_name=settings.BANK_ACCOUNT_NAME,
+        amount=order.amount,
+        transfer_content=transfer_content,
+        qr_url=qr_url,
+    ) if settings.BANK_ACCOUNT_NUMBER else None
+
     return OrderSummary(
-        order_id=order.id,
+        id=order.id,
         order_code=order.order_code,
         course_id=course.id,
-        course_title=course.title,
-        course_thumbnail=course.thumbnail_url,
         original_price=order.original_amount,
         original_price_fmt=format_vnd(order.original_amount),
         discount_amount=order.discount_amount or 0,
         discount_amount_fmt=format_vnd(order.discount_amount or 0),
+        amount=order.amount,
+        amount_fmt=format_vnd(order.amount),
         coupon_code=None,
-        coupon_discount=0,
-        coupon_discount_fmt="0 ₫",
-        final_price=order.amount,
-        final_price_fmt=format_vnd(order.amount),
-        bank_name=settings.BANK_NAME,
-        bank_account_number=settings.BANK_ACCOUNT_NUMBER,
-        bank_account_name=settings.BANK_ACCOUNT_NAME,
-        transfer_content=transfer_content,
-        qr_url=qr_url,
-        expires_at=format_vn_datetime(order.expires_at, "%d/%m/%Y %H:%M:%S"),
-        expires_seconds=expires_seconds,
         status=order.status,
+        expires_at=order.expires_at.isoformat() if order.expires_at else None,
+        expires_seconds=expires_seconds,
+        course={
+            "id": str(course.id),
+            "title": course.title,
+            "slug": course.slug,
+            "thumbnail_url": course.thumbnail_url,
+            "price": course.price,
+            "original_price": course.original_price,
+        },
+        bank_transfer_info=bank_transfer_info,
     )
 
 

@@ -80,33 +80,36 @@ class CreateOrderRequest(BaseModel):
     coupon_code: Optional[str] = None
 
 
+class BankTransferInfo(BaseModel):
+    bank_name: str
+    account_number: str
+    account_name: str
+    amount: float
+    transfer_content: str
+    qr_url: Optional[str] = None
+
+
 class OrderSummary(BaseModel):
     """Thông tin đơn hàng trả về khi tạo checkout."""
-    order_id: UUID
+    id: UUID
     order_code: str          # "DH20260529ABC123"
     course_id: UUID
-    course_title: str
-    course_thumbnail: Optional[str] = None
     # Giá
     original_price: float
     original_price_fmt: str
     discount_amount: float = 0
     discount_amount_fmt: str = "0 ₫"
+    amount: float            # Số tiền cần thanh toán
+    amount_fmt: str
     coupon_code: Optional[str] = None
-    coupon_discount: float = 0
-    coupon_discount_fmt: str = "0 ₫"
-    final_price: float
-    final_price_fmt: str
-    # Thanh toán
-    bank_name: str
-    bank_account_number: str
-    bank_account_name: str
-    transfer_content: str    # = order_code
-    qr_url: Optional[str] = None
-    # Thời gian
-    expires_at: str          # "29/05/2026 15:00:00"
-    expires_seconds: int     # giây còn lại (30 phút = 1800)
-    status: str              # "pending" | "paid" | "expired" | "cancelled"
+    # Trạng thái
+    status: str
+    expires_at: Optional[str] = None   # ISO 8601 — JS new Date() parse được
+    expires_seconds: int = 0
+    # Thông tin khóa học
+    course: Optional[dict] = None
+    # Thông tin ngân hàng (None nếu chưa cấu hình)
+    bank_transfer_info: Optional[BankTransferInfo] = None
 
 
 class OrderListItem(BaseModel):
