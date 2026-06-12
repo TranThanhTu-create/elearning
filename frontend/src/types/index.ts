@@ -109,16 +109,24 @@ export interface Order {
   course_id: string
   amount: number
   amount_fmt?: string
+  original_amount?: number
+  original_amount_fmt?: string
+  discount_amount?: number
+  discount_amount_fmt?: string
   status: 'pending' | 'completed' | 'failed' | 'refunded' | 'expired'
   status_label?: string
   payment_method?: string
   coupon_code?: string
-  discount_amount?: number
+  affiliate_code?: string
   created_at: string
   completed_at?: string
   expires_at?: string
   course?: Course
   user?: User
+  // Flat fields từ admin list API
+  user_name?: string
+  user_email?: string
+  course_title?: string
   bank_transfer_info?: {
     bank_name: string
     account_number: string

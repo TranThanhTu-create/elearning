@@ -90,8 +90,8 @@ export default function AdminOrdersPage() {
                   {orders.map(o => (
                     <tr key={o.id}>
                       <td><span style={{ fontFamily: 'monospace', fontSize: '12px' }}>{o.order_code}</span></td>
-                      <td style={{ fontSize: '13px' }}>{o.user?.name || '—'}<br /><span style={{ color: '#888', fontSize: '12px' }}>{o.user?.email}</span></td>
-                      <td style={{ fontSize: '13px', maxWidth: '200px' }}>{o.course?.title || '—'}</td>
+                      <td style={{ fontSize: '13px' }}>{o.user?.name || o.user_name || '—'}<br /><span style={{ color: '#888', fontSize: '12px' }}>{o.user?.email || o.user_email}</span></td>
+                      <td style={{ fontSize: '13px', maxWidth: '200px' }}>{o.course?.title || o.course_title || '—'}</td>
                       <td><strong>{o.amount_fmt || formatVnd(o.amount)}</strong></td>
                       <td><span className={`tag ${getStatusTag(o.status)}`}>{o.status_label || o.status}</span></td>
                       <td style={{ fontSize: '12px', color: '#888' }}>{formatDateTime(o.created_at)}</td>

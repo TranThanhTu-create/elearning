@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { api } from '@/lib/api'
+import { useAuth } from '@/lib/auth'
 import type { Course, Lesson, Chapter } from '@/types'
 
 /* ── helpers ── */
@@ -16,6 +17,7 @@ function fmtDuration(s?: number) {
 export default function LearnPage() {
   const { slug } = useParams<{ slug: string }>()
   const router = useRouter()
+  const { isAdmin } = useAuth()
 
   const [course, setCourse] = useState<Course | null>(null)
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null)
@@ -29,7 +31,7 @@ export default function LearnPage() {
     api.get(`/courses/${slug}?enrolled=1`)
       .then(r => {
         const c: Course = r.data
-        if (!c.is_enrolled) { router.push(`/courses/${slug}`); return }
+        if (!c.is_enrolled && !isAdmin) { router.push(`/courses/${slug}`); return }
         setCourse(c)
         // Auto-select last lesson or first lesson
         const all = c.chapters?.flatMap(ch => ch.lessons || []) || []
