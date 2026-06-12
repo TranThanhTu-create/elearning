@@ -24,6 +24,10 @@ export default function AdminCourseEditPage() {
   const [addingLessonFor, setAddingLessonFor] = useState<string | null>(null)
   const [newLessonTitle, setNewLessonTitle] = useState('')
   const [newLessonVideo, setNewLessonVideo] = useState('')
+  const [editingLesson, setEditingLesson] = useState<string | null>(null)
+  const [editLessonTitle, setEditLessonTitle] = useState('')
+  const [editLessonVideo, setEditLessonVideo] = useState('')
+  const [editLessonFree, setEditLessonFree] = useState(false)
 
   useEffect(() => {
     api.get('/admin/courses/categories').then(r => setCategories(r.data.items || r.data)).catch(() => {})
@@ -246,18 +250,63 @@ export default function AdminCourseEditPage() {
                   </div>
                 </div>
                 {ch.lessons?.map(l => (
-                  <div key={l.id} style={{ padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '8px', borderTop: '1px solid #eee', fontSize: '13px' }}>
-                    <span>▶</span>
-                    <span style={{ flex: 1 }}>{l.title}</span>
-                    {l.is_preview && <span className="tag tag-info">Preview</span>}
-                    <button className="btn btn-sm btn-danger" onClick={async () => {
-                      if (!confirm(`Xóa bài "${l.title}"?`)) return
-                      try {
-                        await api.delete(`/admin/courses/${id}/chapters/${ch.id}/lessons/${l.id}`)
-                        const { data } = await api.get(`/admin/courses/${id}`)
-                        setChapters(data.chapters || [])
-                      } catch (err) { setError(extractError(err)) }
-                    }}>Xóa</button>
+                  <div key={l.id} style={{ borderTop: '1px solid #eee' }}>
+                    {editingLesson === l.id ? (
+                      <div style={{ padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: '8px', background: '#f0f8ff' }}>
+                        <input
+                          className="form-input"
+                          placeholder="Tên bài học..."
+                          value={editLessonTitle}
+                          onChange={e => setEditLessonTitle(e.target.value)}
+                          autoFocus
+                        />
+                        <input
+                          className="form-input"
+                          placeholder="ID video YouTube (ví dụ: dQw4w9WgXcQ)"
+                          value={editLessonVideo}
+                          onChange={e => setEditLessonVideo(e.target.value)}
+                        />
+                        <label style={{ fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                          <input type="checkbox" checked={editLessonFree} onChange={e => setEditLessonFree(e.target.checked)} />
+                          Bài học miễn phí (hiện cho người chưa mua)
+                        </label>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button className="btn btn-primary btn-sm" onClick={async () => {
+                            try {
+                              await api.patch(`/admin/courses/${id}/chapters/${ch.id}/lessons/${l.id}`, {
+                                title: editLessonTitle.trim(),
+                                youtube_video_id: editLessonVideo.trim() || null,
+                                is_free: editLessonFree,
+                              })
+                              const { data } = await api.get(`/admin/courses/${id}`)
+                              setChapters(data.chapters || [])
+                              setEditingLesson(null)
+                            } catch (err) { setError(extractError(err)) }
+                          }}>Lưu</button>
+                          <button className="btn btn-sm btn-ghost" onClick={() => setEditingLesson(null)}>Hủy</button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{ padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px' }}>
+                        <span>▶</span>
+                        <span style={{ flex: 1 }}>{l.title}</span>
+                        {(l.is_free || l.is_preview) && <span className="tag tag-info">Miễn phí</span>}
+                        <button className="btn btn-sm btn-ghost" onClick={() => {
+                          setEditingLesson(l.id)
+                          setEditLessonTitle(l.title)
+                          setEditLessonVideo(l.video_id || '')
+                          setEditLessonFree(l.is_free ?? l.is_preview ?? false)
+                        }}>Sửa</button>
+                        <button className="btn btn-sm btn-danger" onClick={async () => {
+                          if (!confirm(`Xóa bài "${l.title}"?`)) return
+                          try {
+                            await api.delete(`/admin/courses/${id}/chapters/${ch.id}/lessons/${l.id}`)
+                            const { data } = await api.get(`/admin/courses/${id}`)
+                            setChapters(data.chapters || [])
+                          } catch (err) { setError(extractError(err)) }
+                        }}>Xóa</button>
+                      </div>
+                    )}
                   </div>
                 ))}
                 {addingLessonFor === ch.id && (
