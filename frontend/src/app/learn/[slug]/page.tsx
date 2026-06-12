@@ -17,7 +17,7 @@ function fmtDuration(s?: number) {
 export default function LearnPage() {
   const { slug } = useParams<{ slug: string }>()
   const router = useRouter()
-  const { isAdmin } = useAuth()
+  const { isAdmin, loading: authLoading } = useAuth()
 
   const [course, setCourse] = useState<Course | null>(null)
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null)
@@ -26,8 +26,9 @@ export default function LearnPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [loading, setLoading] = useState(true)
 
-  /* ── Load course ── */
+  /* ── Load course (wait for auth first) ── */
   useEffect(() => {
+    if (authLoading) return
     api.get(`/courses/${slug}?enrolled=1`)
       .then(r => {
         const c: Course = r.data
@@ -40,7 +41,7 @@ export default function LearnPage() {
       })
       .catch(() => router.push('/dashboard'))
       .finally(() => setLoading(false))
-  }, [slug])
+  }, [slug, authLoading, isAdmin])
 
   /* ── Load a lesson (get video_id) ── */
   const loadLesson = useCallback(async (courseSlug: string, lesson: Lesson) => {
