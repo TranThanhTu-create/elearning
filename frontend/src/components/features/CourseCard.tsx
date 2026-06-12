@@ -22,7 +22,7 @@ export default function CourseCard({ course }: Props) {
       </div>
       <div className="course-body">
         {course.category && (
-          <div className="course-badge">{course.category.name}</div>
+          <div className="course-badge">{typeof course.category === 'string' ? course.category : (course.category as {name:string}).name}</div>
         )}
         <div className="course-title">{course.title}</div>
         <div className="course-meta">

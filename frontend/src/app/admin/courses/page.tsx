@@ -68,7 +68,7 @@ export default function AdminCoursesPage() {
                     <tr key={c.id}>
                       <td>
                         <div style={{ fontWeight: 600, maxWidth: '240px' }}>{c.title}</div>
-                        {c.category && <div style={{ fontSize: '11px', color: '#888' }}>{c.category.name}</div>}
+                        {c.category && <div style={{ fontSize: '11px', color: '#888' }}>{typeof c.category === 'string' ? c.category : (c.category as {name:string}).name}</div>}
                       </td>
                       <td>{formatVnd(c.price)}</td>
                       <td>{formatNumber(c.total_students)}</td>
