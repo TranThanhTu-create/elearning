@@ -44,8 +44,11 @@ export interface Lesson {
   title: string
   order_index: number
   duration_seconds?: number
+  duration_fmt?: string
   video_url?: string
-  is_preview: boolean
+  video_id?: string          // YouTube ID — chỉ có khi is_free=true
+  is_preview: boolean        // alias cũ
+  is_free?: boolean          // tên mới từ backend
   is_completed?: boolean
 }
 
@@ -53,27 +56,40 @@ export interface Course {
   id: string
   slug: string
   title: string
+  subtitle?: string
   short_desc?: string
   description?: string
   thumbnail_url?: string
-  category?: Category
+  category?: Category | string
   instructor_name?: string
   price: number
   price_fmt?: string
   original_price?: number
   original_price_fmt?: string
   discount_percent?: number
+  badge?: string
   level?: string
   language?: string
   total_students: number
+  students_count?: number
   avg_rating: number
   reviews_count?: number
   total_lessons?: number
   total_duration_seconds?: number
+  total_duration_fmt?: string
+  total_chapters?: number
   is_published?: boolean
   is_enrolled?: boolean
   chapters?: Chapter[]
   created_at?: string
+  last_updated?: string
+  // Landing page fields
+  outcomes?: string[]
+  requirements?: string[]
+  faq?: { q: string; a: string }[]
+  trailer_video_id?: string
+  progress_percent?: number
+  last_lesson_id?: string
 }
 
 export interface Enrollment {

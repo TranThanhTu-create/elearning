@@ -17,7 +17,7 @@ class LessonBase(BaseModel):
 
 
 class LessonPublic(BaseModel):
-    """Trả cho user chưa mua — KHÔNG có video_id."""
+    """Trả cho user chưa mua — chỉ có video_id nếu is_free=True."""
     id: UUID
     title: str
     order_index: int
@@ -25,6 +25,7 @@ class LessonPublic(BaseModel):
     duration_seconds: int
     duration_fmt: str         # "12:34"
     is_completed: bool = False
+    video_id: Optional[str] = None   # YouTube ID — chỉ expose khi is_free=True
 
     model_config = {"from_attributes": True}
 
@@ -98,6 +99,7 @@ class CourseListItem(BaseModel):
     total_lessons: int = 0
     total_duration_fmt: str = "0 giờ"
     students_count: int = 0
+    avg_rating: float = 0.0
     is_enrolled: bool = False    # nếu user đã đăng nhập + mua
 
     model_config = {"from_attributes": True}

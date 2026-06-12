@@ -81,6 +81,7 @@ def _course_to_list_item(course: Course, is_enrolled: bool = False) -> CourseLis
         total_lessons=course.total_lessons or 0,
         total_duration_fmt=_fmt_total_hours(course.total_duration_seconds or 0),
         students_count=course.total_students or 0,
+        avg_rating=course.avg_rating or 0.0,
         is_enrolled=is_enrolled,
     )
 
@@ -240,6 +241,7 @@ async def get_course_detail(
                 duration_seconds=lesson.duration_seconds or 0,
                 duration_fmt=_fmt_duration(lesson.duration_seconds or 0),
                 is_completed=is_completed,
+                video_id=lesson.youtube_video_id if lesson.is_free else None,
             ))
 
         chapter_duration = sum(l.duration_seconds or 0 for l in chapter.lessons)
@@ -287,6 +289,7 @@ async def get_course_detail(
         total_chapters=len(course.chapters),
         total_duration_fmt=_fmt_total_hours(total_duration),
         students_count=course.total_students or 0,
+        avg_rating=course.avg_rating or 0.0,
         meta_title=course.meta_title,
         meta_description=course.meta_desc,
         last_updated=format_vn_date(course.updated_at),
