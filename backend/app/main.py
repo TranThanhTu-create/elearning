@@ -115,6 +115,7 @@ from app.api.admin import (
     affiliate as admin_affiliate,
     analytics as admin_analytics,
     settings as admin_settings,
+    upload as admin_upload,
 )
 
 # Public / Auth
@@ -140,6 +141,7 @@ app.include_router(admin_leads.router,     prefix="/api/admin/leads",     tags=[
 app.include_router(admin_affiliate.router, prefix="/api/admin/affiliate", tags=["Admin - Affiliate"])
 app.include_router(admin_analytics.router, prefix="/api/admin/analytics", tags=["Admin - Analytics"])
 app.include_router(admin_settings.router,  prefix="/api/admin/settings",  tags=["Admin - Settings"])
+app.include_router(admin_upload.router,    prefix="/api/admin/upload",    tags=["Admin - Upload"])
 
 
 # ── Health Check ───────────────────────────────────────────

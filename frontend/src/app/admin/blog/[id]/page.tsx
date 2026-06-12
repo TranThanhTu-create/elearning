@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { api, extractError } from '@/lib/api'
+import ImageUploader from '@/components/ui/ImageUploader'
 import type { BlogCategory } from '@/types'
 
 export default function AdminBlogEditPage() {
@@ -108,11 +109,11 @@ export default function AdminBlogEditPage() {
                   <label className="form-label">Tags (phân cách bằng dấu phẩy)</label>
                   <input className="form-input" value={form.tags} onChange={set('tags')} placeholder="marketing, seo, facebook" />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">URL ảnh bìa</label>
-                  <input className="form-input" value={form.thumbnail_url} onChange={set('thumbnail_url')} placeholder="https://..." />
-                  {form.thumbnail_url && <img src={form.thumbnail_url} alt="preview" style={{ width: '100%', marginTop: '8px', borderRadius: '6px', aspectRatio: '16/9', objectFit: 'cover' }} />}
-                </div>
+                <ImageUploader
+                  label="Ảnh bìa"
+                  value={form.thumbnail_url}
+                  onChange={url => setForm(f => ({ ...f, thumbnail_url: url }))}
+                />
                 <button type="submit" className="btn btn-primary btn-full" disabled={saving}>
                   {saving ? <span className="spinner" /> : isNew ? 'Tạo bài viết' : 'Lưu thay đổi'}
                 </button>
