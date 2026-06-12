@@ -50,7 +50,7 @@ export default function AdminCourseEditPage() {
     setError('')
     setSuccess('')
     try {
-      const body = { ...form, price: Number(form.price), original_price: form.original_price ? Number(form.original_price) : undefined }
+      const body = { ...form, price: Number(form.price), original_price: form.original_price ? Number(form.original_price) : undefined, category_id: form.category_id || undefined }
       if (isNew) {
         const { data } = await api.post('/admin/courses', body)
         router.push(`/admin/courses/${data.id}`)
