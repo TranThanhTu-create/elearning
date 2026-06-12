@@ -19,6 +19,12 @@ export default function AdminCourseEditPage() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
+  const [addingChapter, setAddingChapter] = useState(false)
+  const [newChapterTitle, setNewChapterTitle] = useState('')
+  const [addingLessonFor, setAddingLessonFor] = useState<string | null>(null)
+  const [newLessonTitle, setNewLessonTitle] = useState('')
+  const [newLessonVideo, setNewLessonVideo] = useState('')
+
   useEffect(() => {
     api.get('/admin/courses/categories').then(r => setCategories(r.data.items || r.data)).catch(() => {})
     if (!isNew) {
@@ -163,30 +169,53 @@ export default function AdminCourseEditPage() {
           <div className="card" style={{ marginTop: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <h3 style={{ fontWeight: 700 }}>Chương học ({chapters.length})</h3>
-              <button className="btn btn-primary btn-sm" onClick={async () => {
-                const title = prompt('Tên chương:')
-                if (!title) return
-                try {
-                  await api.post(`/admin/courses/${id}/chapters`, { title, order_index: chapters.length })
-                  const { data } = await api.get(`/admin/courses/${id}`)
-                  setChapters(data.chapters || [])
-                } catch (err) { setError(extractError(err)) }
-              }}>+ Thêm chương</button>
+              {!addingChapter && (
+                <button className="btn btn-primary btn-sm" onClick={() => { setAddingChapter(true); setNewChapterTitle('') }}>+ Thêm chương</button>
+              )}
             </div>
+            {addingChapter && (
+              <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', alignItems: 'center' }}>
+                <input
+                  className="form-input"
+                  style={{ flex: 1 }}
+                  placeholder="Tên chương mới..."
+                  value={newChapterTitle}
+                  onChange={e => setNewChapterTitle(e.target.value)}
+                  onKeyDown={async e => {
+                    if (e.key === 'Enter' && newChapterTitle.trim()) {
+                      try {
+                        await api.post(`/admin/courses/${id}/chapters`, { title: newChapterTitle.trim(), order_index: chapters.length })
+                        const { data } = await api.get(`/admin/courses/${id}`)
+                        setChapters(data.chapters || [])
+                        setAddingChapter(false)
+                        setNewChapterTitle('')
+                      } catch (err) { setError(extractError(err)) }
+                    } else if (e.key === 'Escape') { setAddingChapter(false) }
+                  }}
+                  autoFocus
+                />
+                <button className="btn btn-primary btn-sm" onClick={async () => {
+                  if (!newChapterTitle.trim()) return
+                  try {
+                    await api.post(`/admin/courses/${id}/chapters`, { title: newChapterTitle.trim(), order_index: chapters.length })
+                    const { data } = await api.get(`/admin/courses/${id}`)
+                    setChapters(data.chapters || [])
+                    setAddingChapter(false)
+                    setNewChapterTitle('')
+                  } catch (err) { setError(extractError(err)) }
+                }}>Lưu</button>
+                <button className="btn btn-sm btn-ghost" onClick={() => setAddingChapter(false)}>Hủy</button>
+              </div>
+            )}
             {chapters.map(ch => (
               <div key={ch.id} style={{ border: '1px solid #eee', borderRadius: '6px', marginBottom: '8px', overflow: 'hidden' }}>
                 <div style={{ padding: '10px 14px', background: '#f6f6f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontWeight: 600, fontSize: '14px' }}>{ch.title}</span>
                   <div style={{ display: 'flex', gap: '6px' }}>
-                    <button className="btn btn-sm btn-ghost" onClick={async () => {
-                      const t = prompt('Tên bài học mới:')
-                      if (!t) return
-                      const vUrl = prompt('URL video (bỏ trống nếu chưa có):') || undefined
-                      try {
-                        await api.post(`/admin/courses/${id}/chapters/${ch.id}/lessons`, { title: t, order_index: ch.lessons?.length || 0, youtube_video_id: vUrl })
-                        const { data } = await api.get(`/admin/courses/${id}`)
-                        setChapters(data.chapters || [])
-                      } catch (err) { setError(extractError(err)) }
+                    <button className="btn btn-sm btn-ghost" onClick={() => {
+                      setAddingLessonFor(ch.id)
+                      setNewLessonTitle('')
+                      setNewLessonVideo('')
                     }}>+ Bài học</button>
                     <button className="btn btn-sm btn-danger" onClick={async () => {
                       if (!confirm(`Xóa chương "${ch.title}"?`)) return
@@ -212,6 +241,39 @@ export default function AdminCourseEditPage() {
                     }}>Xóa</button>
                   </div>
                 ))}
+                {addingLessonFor === ch.id && (
+                  <div style={{ padding: '10px 14px', borderTop: '1px solid #eee', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <input
+                      className="form-input"
+                      placeholder="Tên bài học..."
+                      value={newLessonTitle}
+                      onChange={e => setNewLessonTitle(e.target.value)}
+                      autoFocus
+                    />
+                    <input
+                      className="form-input"
+                      placeholder="ID video YouTube (bỏ trống nếu chưa có)"
+                      value={newLessonVideo}
+                      onChange={e => setNewLessonVideo(e.target.value)}
+                    />
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button className="btn btn-primary btn-sm" onClick={async () => {
+                        if (!newLessonTitle.trim()) return
+                        try {
+                          await api.post(`/admin/courses/${id}/chapters/${ch.id}/lessons`, {
+                            title: newLessonTitle.trim(),
+                            order_index: ch.lessons?.length || 0,
+                            youtube_video_id: newLessonVideo.trim() || undefined,
+                          })
+                          const { data } = await api.get(`/admin/courses/${id}`)
+                          setChapters(data.chapters || [])
+                          setAddingLessonFor(null)
+                        } catch (err) { setError(extractError(err)) }
+                      }}>Lưu bài học</button>
+                      <button className="btn btn-sm btn-ghost" onClick={() => setAddingLessonFor(null)}>Hủy</button>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
