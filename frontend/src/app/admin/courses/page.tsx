@@ -72,7 +72,7 @@ export default function AdminCoursesPage() {
                       </td>
                       <td>{formatVnd(c.price)}</td>
                       <td>{formatNumber(c.total_students)}</td>
-                      <td>⭐ {c.avg_rating.toFixed(1)}</td>
+                      <td>⭐ {(c.avg_rating ?? 0).toFixed(1)}</td>
                       <td>
                         <span className={`tag ${c.is_published ? 'tag-success' : 'tag-default'}`}>
                           {c.is_published ? 'Đã xuất bản' : 'Nháp'}

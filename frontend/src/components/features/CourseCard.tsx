@@ -38,7 +38,7 @@ export default function CourseCard({ course }: Props) {
           )}
         </div>
         <div className="course-footer">
-          <span>⭐ {course.avg_rating.toFixed(1)}</span>
+          <span>⭐ {(course.avg_rating ?? 0).toFixed(1)}</span>
           <span>{formatNumber(course.total_students)} học viên</span>
         </div>
       </div>

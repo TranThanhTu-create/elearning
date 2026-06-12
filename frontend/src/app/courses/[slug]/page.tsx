@@ -97,7 +97,7 @@ export default async function CourseDetailPage({ params }: Props) {
     },
     aggregateRating: course.reviews_count && course.reviews_count > 0 ? {
       '@type': 'AggregateRating',
-      ratingValue: course.avg_rating.toFixed(1),
+      ratingValue: (course.avg_rating ?? 0).toFixed(1),
       reviewCount: course.reviews_count,
       bestRating: '5',
       worstRating: '1',
@@ -133,7 +133,7 @@ export default async function CourseDetailPage({ params }: Props) {
                 <p style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.65 }}>{course.short_desc}</p>
               )}
               <div style={{ display: 'flex', gap: '20px', marginTop: '16px', flexWrap: 'wrap', fontSize: '14px', color: 'var(--text-muted)' }}>
-                <span>⭐ <strong style={{ color: 'var(--text)' }}>{course.avg_rating.toFixed(1)}</strong> ({formatNumber(course.reviews_count || 0)} đánh giá)</span>
+                <span>⭐ <strong style={{ color: 'var(--text)' }}>{(course.avg_rating ?? 0).toFixed(1)}</strong> ({formatNumber(course.reviews_count || 0)} đánh giá)</span>
                 <span>👥 <strong style={{ color: 'var(--text)' }}>{formatNumber(course.total_students)}</strong> học viên</span>
                 {course.level && <span>📊 {levelLabel(course.level)}</span>}
                 {course.instructor_name && <span>👨‍🏫 {course.instructor_name}</span>}
