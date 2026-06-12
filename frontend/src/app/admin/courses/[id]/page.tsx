@@ -183,7 +183,7 @@ export default function AdminCourseEditPage() {
                       if (!t) return
                       const vUrl = prompt('URL video (bỏ trống nếu chưa có):') || undefined
                       try {
-                        await api.post(`/admin/courses/${id}/chapters/${ch.id}/lessons`, { title: t, order_index: ch.lessons?.length || 0, video_url: vUrl })
+                        await api.post(`/admin/courses/${id}/chapters/${ch.id}/lessons`, { title: t, order_index: ch.lessons?.length || 0, youtube_video_id: vUrl })
                         const { data } = await api.get(`/admin/courses/${id}`)
                         setChapters(data.chapters || [])
                       } catch (err) { setError(extractError(err)) }
