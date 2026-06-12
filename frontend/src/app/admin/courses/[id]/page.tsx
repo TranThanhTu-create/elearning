@@ -12,7 +12,7 @@ export default function AdminCourseEditPage() {
   const isNew = id === 'new'
 
   const [categories, setCategories] = useState<Category[]>([])
-  const [form, setForm] = useState({ title: '', slug: '', short_desc: '', description: '', price: '', original_price: '', thumbnail_url: '', level: 'beginner', language: 'vi', category_id: '', instructor_name: '' })
+  const [form, setForm] = useState({ title: '', slug: '', short_desc: '', description: '', price: '', original_price: '', thumbnail_url: '', level: 'beginner', language: 'vi', category_id: '', instructor_name: '', is_published: false })
   const [chapters, setChapters] = useState<Chapter[]>([])
   const [loading, setLoading] = useState(!isNew)
   const [saving, setSaving] = useState(false)
@@ -42,6 +42,7 @@ export default function AdminCourseEditPage() {
           language: c.language || 'vi',
           category_id: c.category_id || '',
           instructor_name: c.instructor_name || '',
+          is_published: c.is_published || false,
         })
         setChapters(c.chapters || [])
       }).catch(() => {}).finally(() => setLoading(false))
@@ -155,6 +156,24 @@ export default function AdminCourseEditPage() {
                   <input className="form-input" value={form.thumbnail_url} onChange={set('thumbnail_url')} placeholder="https://..." />
                   {form.thumbnail_url && <img src={form.thumbnail_url} alt="preview" style={{ width: '100%', marginTop: '8px', borderRadius: '6px', aspectRatio: '16/9', objectFit: 'cover' }} />}
                 </div>
+              </div>
+
+              <div className="card" style={{ marginBottom: '12px', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: '14px' }}>Trạng thái xuất bản</div>
+                  <div style={{ fontSize: '12px', color: form.is_published ? '#22c55e' : '#888', marginTop: '2px' }}>
+                    {form.is_published ? '✓ Đang hiển thị cho người dùng' : '✗ Đang ẩn, người dùng không thấy'}
+                  </div>
+                </div>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                  <input
+                    type="checkbox"
+                    checked={form.is_published}
+                    onChange={e => setForm(f => ({ ...f, is_published: e.target.checked }))}
+                    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                  />
+                  <span style={{ fontSize: '13px', fontWeight: 600 }}>{form.is_published ? 'Xuất bản' : 'Xuất bản'}</span>
+                </label>
               </div>
 
               <button type="submit" className="btn btn-primary btn-full btn-lg" disabled={saving}>
