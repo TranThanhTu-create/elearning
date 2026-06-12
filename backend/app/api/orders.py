@@ -58,7 +58,6 @@ async def _calc_coupon(
         select(Coupon).where(
             Coupon.code == code.upper().strip(),
             Coupon.is_active == True,
-            Coupon.deleted_at.is_(None),
         )
     )
     coupon = result.scalar_one_or_none()
@@ -71,17 +70,12 @@ async def _calc_coupon(
         return None, 0, "Mã giảm giá đã hết hạn."
 
     # Kiểm tra số lượt dùng tổng
-    if coupon.max_uses and coupon.uses_count >= coupon.max_uses:
+    if coupon.max_uses and coupon.used_count >= coupon.max_uses:
         return None, 0, "Mã giảm giá đã hết lượt sử dụng."
 
-    # Kiểm tra applies_to
-    if coupon.applies_to != "all":
-        try:
-            applies_course_id = UUID(coupon.applies_to)
-            if applies_course_id != course_id:
-                return None, 0, "Mã giảm giá không áp dụng cho khóa học này."
-        except ValueError:
-            pass
+    # Kiểm tra coupon chỉ áp dụng cho khóa cụ thể
+    if coupon.course_id is not None and coupon.course_id != course_id:
+        return None, 0, "Mã giảm giá không áp dụng cho khóa học này."
 
     # Kiểm tra đơn tối thiểu
     if coupon.min_order_amount and original_price < coupon.min_order_amount:
@@ -89,13 +83,13 @@ async def _calc_coupon(
 
     # Kiểm tra giới hạn /tài khoản
     if coupon.max_uses_per_user and coupon.max_uses_per_user > 0:
-        used_count = await db.execute(
+        user_usage_count = await db.execute(
             select(func.count(CouponUsage.id)).where(
                 CouponUsage.coupon_id == coupon.id,
                 CouponUsage.user_id == user_id,
             )
         )
-        if (used_count.scalar() or 0) >= coupon.max_uses_per_user:
+        if (user_usage_count.scalar() or 0) >= coupon.max_uses_per_user:
             return None, 0, f"Bạn đã dùng mã này {coupon.max_uses_per_user} lần rồi."
 
     # Tính discount
@@ -221,12 +215,10 @@ async def create_order(
         user_id=current_user.id,
         course_id=req.course_id,
         order_code=order_code,
-        original_price=original_price,
+        original_amount=original_price,
         discount_amount=discount_amount,
+        amount=final_price,
         coupon_id=coupon_obj.id if coupon_obj else None,
-        coupon_code=coupon_code,
-        coupon_discount=coupon_discount,
-        final_price=final_price,
         status="pending",
         expires_at=expires_at,
         payment_method="bank_transfer",
@@ -260,7 +252,7 @@ async def _build_order_summary(order: Order, course: Course, db: AsyncSession) -
     qr_url = (
         f"https://img.vietqr.io/image/{settings.BANK_NAME}-"
         f"{settings.BANK_ACCOUNT_NUMBER}-compact2.png"
-        f"?amount={int(order.final_price)}&addInfo={transfer_content}"
+        f"?amount={int(order.amount)}&addInfo={transfer_content}"
         f"&accountName={settings.BANK_ACCOUNT_NAME}"
     ) if settings.BANK_ACCOUNT_NUMBER else None
 
@@ -272,15 +264,15 @@ async def _build_order_summary(order: Order, course: Course, db: AsyncSession) -
         course_id=course.id,
         course_title=course.title,
         course_thumbnail=course.thumbnail_url,
-        original_price=order.original_price,
-        original_price_fmt=format_vnd(order.original_price),
+        original_price=order.original_amount,
+        original_price_fmt=format_vnd(order.original_amount),
         discount_amount=order.discount_amount or 0,
-        discount_amount_fmt=format_vnd(order.discount_amount),
-        coupon_code=order.coupon_code,
-        coupon_discount=order.coupon_discount or 0,
-        coupon_discount_fmt=format_vnd(order.coupon_discount),
-        final_price=order.final_price,
-        final_price_fmt=format_vnd(order.final_price),
+        discount_amount_fmt=format_vnd(order.discount_amount or 0),
+        coupon_code=None,
+        coupon_discount=0,
+        coupon_discount_fmt="0 ₫",
+        final_price=order.amount,
+        final_price_fmt=format_vnd(order.amount),
         bank_name=settings.BANK_NAME,
         bank_account_number=settings.BANK_ACCOUNT_NUMBER,
         bank_account_name=settings.BANK_ACCOUNT_NAME,
@@ -387,9 +379,9 @@ async def sepay_webhook(
         return {"status": "ok", "message": "Order not found — ignored"}
 
     # Kiểm tra số tiền
-    if transfer_amount < order.final_price * 0.99:  # cho phép lệch 1%
+    if transfer_amount < order.amount * 0.99:  # cho phép lệch 1%
         logger.warning(
-            f"⚠️ Số tiền không khớp | expected={format_vnd(order.final_price)} "
+            f"⚠️ Số tiền không khớp | expected={format_vnd(order.amount)} "
             f"received={format_vnd(transfer_amount)}"
         )
         return {"status": "error", "message": "Amount mismatch"}
@@ -397,9 +389,9 @@ async def sepay_webhook(
     # Mở khóa khóa học
     log_payment("CONFIRMED", order.order_code, int(transfer_amount), "webhook")
 
-    order.status = "paid"
-    order.paid_at = now_utc()
-    order.payment_reference = str(payload.get("id", ""))
+    order.status = "completed"
+    order.completed_at = now_utc()
+    order.sepay_txn_id = str(payload.get("id", ""))
 
     # Tạo enrollment
     existing = await db.execute(
@@ -428,8 +420,8 @@ async def sepay_webhook(
         coupon_result = await db.execute(select(Coupon).where(Coupon.id == order.coupon_id))
         coupon = coupon_result.scalar_one_or_none()
         if coupon:
-            coupon.uses_count = (coupon.uses_count or 0) + 1
-            log_db("UPDATE", "coupons", coupon.id, f"uses_count+1")
+            coupon.used_count = (coupon.used_count or 0) + 1
+            log_db("UPDATE", "coupons", coupon.id, f"used_count+1")
 
     await db.commit()
 
@@ -464,7 +456,7 @@ async def _send_payment_success_email(order_id: UUID):
         name=order.user.name,
         order_code=order.order_code,
         course_title=order.course.title,
-        amount_fmt=format_vnd(order.final_price),
+        amount_fmt=format_vnd(order.amount),
         learn_link=learn_link,
     )
     await send_email(

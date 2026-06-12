@@ -115,7 +115,7 @@ async def get_my_orders(
 
     STATUS_LABELS = {
         "pending":   "Chờ thanh toán",
-        "paid":      "Thành công",
+        "completed": "Thành công",
         "expired":   "Hết hạn",
         "cancelled": "Đã hủy",
         "refunded":  "Hoàn tiền",
@@ -126,11 +126,11 @@ async def get_my_orders(
         order_code=o.order_code,
         course_title=o.course.title if o.course else "—",
         course_thumbnail=o.course.thumbnail_url if o.course else None,
-        final_price=o.final_price,
-        final_price_fmt=format_vnd(o.final_price),
+        final_price=o.amount,
+        final_price_fmt=format_vnd(o.amount),
         status=o.status,
         status_label=STATUS_LABELS.get(o.status, o.status),
-        paid_at=vn_isoformat(o.paid_at),
+        paid_at=vn_isoformat(o.completed_at),
         created_at=vn_isoformat(o.created_at),
     ) for o in orders]
 
